@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "libp2p DevTools",
+  "version": "0.0.1",
+  "description": "Inspect a libp2p node running on the current page",
+  "author": "IP Shipyard",
+  "icons": {
+    "16": "/public/img/libp2p-16.png",
+    "48": "/public/img/libp2p-48.png",
+    "128": "/public/img/libp2p-128.png"
+  },
+  "permissions": [
+    "clipboardWrite",
+    "activeTab",
+    "scripting"
+  ],
+  "devtools_page": "devtools.html",
+  // https://stackoverflow.com/questions/75043889/manifest-v3-background-scripts-service-worker-on-firefox
+  "background": {
+    // for chrome
+    "service_worker": "/dist/service-worker.js",
+    // for firefox
+    "scripts": ["/dist/service-worker.js"]
+  },
+  "content_scripts": [{
+    "matches": ["<all_urls>"],
+    "js": ["/dist/content-script.js"]
+  }]
+}

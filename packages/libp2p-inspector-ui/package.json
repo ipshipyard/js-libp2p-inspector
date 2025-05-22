@@ -1,0 +1,61 @@
+{
+  "name": "@ipshipyard/libp2p-inspector-ui",
+  "version": "0.0.0",
+  "description": "The user interface for inspecting a libp2p node",
+  "type": "module",
+  "scripts": {
+    "clean": "aegir clean",
+    "lint": "aegir lint",
+    "build": "tsc && node copy-assets.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dep-check": "aegir dep-check",
+    "start:firefox": "web-ext run --source-dir . --verbose --devtools"
+  },
+  "author": "info@ipshipyard.com",
+  "license": "Apache-2.0 OR MIT",
+  "types": "./dist/src/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "*",
+        "dist/*",
+        "dist/src/*",
+        "dist/src/*/index"
+      ],
+      "src/*": [
+        "*",
+        "dist/*",
+        "dist/src/*",
+        "dist/src/*/index"
+      ]
+    }
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "import": "./dist/src/index.js"
+    },
+    "./index.css": {
+      "import": "./dist/src/index.css"
+    }
+  },
+  "dependencies": {
+    "@ipshipyard/libp2p-inspector-metrics": "^0.0.0",
+    "@libp2p/interface": "^2.1.2",
+    "@libp2p/peer-id": "^5.1.4",
+    "@multiformats/multiaddr": "^12.2.3",
+    "@multiformats/multiaddr-matcher": "^1.2.1",
+    "multiformats": "^13.1.0",
+    "uint8arrays": "^5.1.0"
+  },
+  "peerDependencies": {
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.4",
+    "@types/react-dom": "^19.1.5",
+    "aegir": "^47.0.12",
+    "fast-glob": "^3.3.3"
+  }
+}

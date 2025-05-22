@@ -1,0 +1,17 @@
+.MultiaddrList {
+  margin-bottom: 12px;
+  margin-left: 0;
+}
+
+.Multiaddr {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 3px;
+  margin-left: 0;
+}
+.Multiaddr code {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

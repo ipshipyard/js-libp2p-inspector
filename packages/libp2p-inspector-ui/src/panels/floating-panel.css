@@ -1,0 +1,8 @@
+.FloatingPanel {
+  background-color: var(---panel-background-color);
+  padding: 20px 20px 10px 20px;
+  margin: 50px auto auto auto;
+  width: 600px;
+  border: 2px solid var(--panel-border-color);
+  border-radius: 10px;
+}

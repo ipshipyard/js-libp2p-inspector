@@ -1,0 +1,17 @@
+.Heading {
+  display: flex;
+  gap: 6px;
+  align-items: baseline;
+}
+
+.Heading h1, .Heading h2, .Heading h3, .Heading h4, .Heading h5, .Heading h6 {
+  display: inline-block;
+  flex-grow: 1;
+}
+.Heading small {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: right;
+}

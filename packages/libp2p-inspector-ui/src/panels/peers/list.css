@@ -1,0 +1,12 @@
+.PeerId {
+  color: var(--dark-text-color);
+}
+
+.PeerTag {
+  border-radius: 10px;
+  display: inline-block;
+  margin-right: 6px;
+  background-color: var(--success-text-colour);
+  color: #333;
+  padding: 5px;
+}

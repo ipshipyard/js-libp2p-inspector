@@ -1,0 +1,23 @@
+.GrantPermissions {
+  display: block;
+  height: 375px;
+  width: 100%;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.chrome.dark .GrantPermissions {
+  background-image: url(../../public/img/grant-permissions-dark-chrome.png);
+}
+
+.chrome.light .GrantPermissions {
+  background-image: url(../../public/img/grant-permissions-dark-chrome.png);
+}
+
+.firefox.dark .GrantPermissions {
+  background-image: url(../../public/img/grant-permissions-dark-firefox.png);
+}
+
+.firefox.light .GrantPermissions {
+  background-image: url(../../public/img/grant-permissions-dark-firefox.png);
+}

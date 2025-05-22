@@ -1,0 +1,7 @@
+.NodePanel {
+  padding: 6px 12px;
+  border-bottom: 1px solid var(--menu-border-color)
+}
+.NodePanel p {
+  margin: 0;
+}

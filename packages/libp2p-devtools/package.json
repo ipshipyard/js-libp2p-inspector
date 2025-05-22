@@ -1,0 +1,38 @@
+{
+  "name": "@ipshipyard/libp2p-devtools",
+  "version": "0.0.1",
+  "description": "Browser DevTools plugin to inspect a libp2p node running on the current page",
+  "type": "module",
+  "scripts": {
+    "clean": "aegir clean",
+    "lint": "aegir lint",
+    "build": "tsc && node esbuild.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dep-check": "aegir dep-check",
+    "start:firefox": "web-ext run --source-dir . --verbose --devtools"
+  },
+  "author": "info@ipshipyard.com",
+  "license": "Apache-2.0 OR MIT",
+  "dependencies": {
+    "@ipshipyard/libp2p-inspector-metrics": "^0.0.0",
+    "@ipshipyard/libp2p-inspector-ui": "^0.0.0",
+    "@libp2p/interface": "^2.1.2",
+    "it-pipe": "^3.0.1",
+    "it-pushable": "^3.2.3",
+    "it-rpc": "^1.0.0",
+    "it-stream-types": "^2.0.2",
+    "multiformats": "^13.1.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-syntax-highlighter": "^15.5.0",
+    "uint8arrays": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.323",
+    "@types/react": "^19.1.4",
+    "@types/react-dom": "^19.1.5",
+    "@types/react-syntax-highlighter": "^15.5.13",
+    "aegir": "^47.0.12",
+    "web-ext": "^8.1.0"
+  }
+}
