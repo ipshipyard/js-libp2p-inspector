@@ -1,0 +1,12 @@
+node_modules
+build
+dist
+.docs
+.coverage
+node_modules
+package-lock.json
+yarn.lock
+.vscode
+interop/*-image.json
+.tmp-compiled-docs
+tsconfig-doc-check.aegir.json
