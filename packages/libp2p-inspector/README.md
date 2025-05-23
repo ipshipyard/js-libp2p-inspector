@@ -1,56 +1,43 @@
-> [!CAUTION]
-> This template is **deprecated**. To get started with an Electron + TypeScript project, we highly recommend starting with [Electron Forge](https://www.electronforge.io/)'s official TypeScript templates.
+# @ipshipyard/libp2p-inspector
 
-# electron-quick-start-typescript
+[![codecov](https://img.shields.io/codecov/c/github/ipshipyard/js-libp2p-inspector.svg?style=flat-square)](https://codecov.io/gh/ipshipyard/js-libp2p-inspector)
+[![CI](https://img.shields.io/github/actions/workflow/status/ipshipyard/js-libp2p-inspector/js-test-and-release.yml?branch=main\&style=flat-square)](https://github.com/ipshipyard/js-libp2p-inspector/actions/workflows/js-test-and-release.yml?query=branch%3Amain)
 
-**Clone and run for a quick way to see Electron in action.**
+> Inspect a running libp2p node
 
-This is a [TypeScript](https://www.typescriptlang.org) port of the [Electron Quick Start repo](https://github.com/electron/electron-quick-start) -- a minimal Electron application based on the [Quick Start Guide](http://electron.atom.io/docs/tutorial/quick-start) within the Electron documentation.
+# About
 
-**Use this app along with the [Electron API Demos](http://electron.atom.io/#get-started) app for API code examples to help you get started.**
+<!--
 
-A basic Electron application needs just these files:
+!IMPORTANT!
 
-- `package.json` - Points to the app's main file and lists its details and dependencies.
-- `main.ts` - Starts the app and creates a browser window to render HTML. This is the app's **main process**.
-- `index.html` - A web page to render. This is the app's **renderer process**.
+Everything in this README between "# About" and "# Install" is automatically
+generated and will be overwritten the next time the doc generator is run.
 
-You can learn more about each of these components within the [Quick Start Guide](http://electron.atom.io/docs/tutorial/quick-start).
+To make changes to this section, please update the @packageDocumentation section
+of src/index.js or src/index.ts
 
-## To Use
+To experiment with formatting, please run "npm run docs" from the root of this
+repo and examine the changes made.
 
-To clone and run this repository you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
+-->
 
-```bash
-# Clone this repository
-git clone https://github.com/electron/electron-quick-start-typescript
-# Go into the repository
-cd electron-quick-start-typescript
-# Install dependencies
-npm install
-# Run the app
-npm start
+An electron app that bundles @ipshipyard/libp2p-inspector-ui for use with
+libp2p nodes running under Node.js or (eventually) in browsers.
+
+# Install
+
+```console
+$ npm i @ipshipyard/libp2p-inspector
 ```
 
-Note: If you're using Linux Bash for Windows, [see this guide](https://www.howtogeek.com/261575/how-to-run-graphical-linux-desktop-applications-from-windows-10s-bash-shell/) or use `node` from the command prompt.
+# License
 
-## Re-compile automatically
+Licensed under either of
 
-To recompile automatically and to allow using [electron-reload](https://github.com/yan-foto/electron-reload), run this in a separate terminal:
+- Apache 2.0, ([LICENSE-APACHE](https://github.com/ipshipyard/js-libp2p-inspector/blob/main/packages/libp2p-inspector/LICENSE-APACHE) / <http://www.apache.org/licenses/LICENSE-2.0>)
+- MIT ([LICENSE-MIT](https://github.com/ipshipyard/js-libp2p-inspector/blob/main/packages/libp2p-inspector/LICENSE-MIT) / <http://opensource.org/licenses/MIT>)
 
-```bash
-npm run watch
-```
+# Contribution
 
-## Resources for Learning Electron
-
-- [electronjs.org/docs](https://electronjs.org/docs) - all of Electron's documentation
-- [Electron Fiddle](https://electronjs.org/fiddle) - create, play, and share small Electron experiments
-- [electronjs.org/community#boilerplates](https://electronjs.org/community#boilerplates) - sample starter apps created by the community
-- [electron/electron-quick-start](https://github.com/electron/electron-quick-start) - a very basic starter Electron app
-- [electron/simple-samples](https://github.com/electron/simple-samples) - small applications with ideas for taking them further
-- [hokein/electron-sample-apps](https://github.com/hokein/electron-sample-apps) - small demo apps for the various Electron APIs
-
-## License
-
-[CC0 1.0 (Public Domain)](LICENSE.md)
+Unless you explicitly state otherwise, any contribution intentionally submitted for inclusion in the work by you, as defined in the Apache-2.0 license, shall be dual licensed as above, without any additional terms or conditions.

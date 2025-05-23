@@ -1,11 +1,9 @@
 # @ipshipyard/libp2p-inspector-metrics
 
-[![libp2p.io](https://img.shields.io/badge/project-libp2p-yellow.svg?style=flat-square)](http://libp2p.io/)
-[![Discuss](https://img.shields.io/discourse/https/discuss.libp2p.io/posts.svg?style=flat-square)](https://discuss.libp2p.io)
-[![codecov](https://img.shields.io/codecov/c/github/libp2p/js-libp2p.svg?style=flat-square)](https://codecov.io/gh/libp2p/js-libp2p)
-[![CI](https://img.shields.io/github/actions/workflow/status/libp2p/js-libp2p/main.yml?branch=main\&style=flat-square)](https://github.com/libp2p/js-libp2p/actions/workflows/main.yml?query=branch%3Amain)
+[![codecov](https://img.shields.io/codecov/c/github/ipshipyard/js-libp2p-inspector.svg?style=flat-square)](https://codecov.io/gh/ipshipyard/js-libp2p-inspector)
+[![CI](https://img.shields.io/github/actions/workflow/status/ipshipyard/js-libp2p-inspector/js-test-and-release.yml?branch=main\&style=flat-square)](https://github.com/ipshipyard/js-libp2p-inspector/actions/workflows/js-test-and-release.yml?query=branch%3Amain)
 
-> Collect libp2p metrics and send them to an inspector
+> Collect libp2p metrics and send them to browser DevTools
 
 # About
 
@@ -24,14 +22,14 @@ repo and examine the changes made.
 
 -->
 
-Configure your browser-based libp2p node with inspector metrics:
+Configure your browser-based libp2p node with DevTools metrics:
 
 ```typescript
 import { createLibp2p } from 'libp2p'
-import { inspectorMetrics } from '@ipshipyard/libp2p-inspector-metrics'
+import { devToolsMetrics } from '@ipshipyard/libp2p-inspector-metrics'
 
 const node = await createLibp2p({
-  metrics: inspectorMetrics()
+  metrics: devToolsMetrics()
 })
 ```
 
@@ -46,22 +44,20 @@ $ npm i @ipshipyard/libp2p-inspector-metrics
 
 ## Browser `<script>` tag
 
-Loading this module through a script tag will make its exports available as `Libp2pDevtoolsMetrics` in the global namespace.
+Loading this module through a script tag will make its exports available as `IpshipyardLibp2pInspectorMetrics` in the global namespace.
 
 ```html
 <script src="https://unpkg.com/@ipshipyard/libp2p-inspector-metrics/dist/index.min.js"></script>
 ```
 
-# API Docs
-
-- <https://libp2p.github.io/js-libp2p/modules/_libp2p_devtools_metrics.html>
+> Collect libp2p metrics and send them to an inspector
 
 # License
 
 Licensed under either of
 
-- Apache 2.0, ([LICENSE-APACHE](https://github.com/libp2p/js-libp2p/blob/main/packages/metrics-devtools/LICENSE-APACHE) / <http://www.apache.org/licenses/LICENSE-2.0>)
-- MIT ([LICENSE-MIT](https://github.com/libp2p/js-libp2p/blob/main/packages/metrics-devtools/LICENSE-MIT) / <http://opensource.org/licenses/MIT>)
+- Apache 2.0, ([LICENSE-APACHE](https://github.com/ipshipyard/js-libp2p-inspector/blob/main/packages/libp2p-inspector-metrics/LICENSE-APACHE) / <http://www.apache.org/licenses/LICENSE-2.0>)
+- MIT ([LICENSE-MIT](https://github.com/ipshipyard/js-libp2p-inspector/blob/main/packages/libp2p-inspector-metrics/LICENSE-MIT) / <http://opensource.org/licenses/MIT>)
 
 # Contribution
 

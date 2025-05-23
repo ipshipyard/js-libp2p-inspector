@@ -8,5 +8,13 @@
     "bin",
     "src",
     "test"
+  ],
+  "references": [
+    {
+      "path": "../libp2p-inspector-metrics"
+    },
+    {
+      "path": "../libp2p-inspector-ui"
+    }
   ]
 }

@@ -4,7 +4,7 @@
   "description": "Browser DevTools plugin to inspect a libp2p node running on the current page",
   "author": "info@ipshipyard.com",
   "license": "Apache-2.0 OR MIT",
-  "homepage": "https://github.com/ipshipyard/js-libp2p-inspector/tree/main/packages/libp2p-inspector-metrics#readme",
+  "homepage": "https://github.com/ipshipyard/js-libp2p-inspector/tree/main/packages/libp2p-devtools#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ipshipyard/js-libp2p-inspector.git"
@@ -28,34 +28,134 @@
     "!dist/test",
     "!**/*.tsbuildinfo"
   ],
+  "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "import": "./dist/src/index.js"
+    }
+  },
+  "release": {
+    "branches": [
+      "main"
+    ],
+    "plugins": [
+      [
+        "@semantic-release/commit-analyzer",
+        {
+          "preset": "conventionalcommits",
+          "releaseRules": [
+            {
+              "breaking": true,
+              "release": "major"
+            },
+            {
+              "revert": true,
+              "release": "patch"
+            },
+            {
+              "type": "feat",
+              "release": "minor"
+            },
+            {
+              "type": "fix",
+              "release": "patch"
+            },
+            {
+              "type": "docs",
+              "release": "patch"
+            },
+            {
+              "type": "test",
+              "release": "patch"
+            },
+            {
+              "type": "deps",
+              "release": "patch"
+            },
+            {
+              "scope": "no-release",
+              "release": false
+            }
+          ]
+        }
+      ],
+      [
+        "@semantic-release/release-notes-generator",
+        {
+          "preset": "conventionalcommits",
+          "presetConfig": {
+            "types": [
+              {
+                "type": "feat",
+                "section": "Features"
+              },
+              {
+                "type": "fix",
+                "section": "Bug Fixes"
+              },
+              {
+                "type": "chore",
+                "section": "Trivial Changes"
+              },
+              {
+                "type": "docs",
+                "section": "Documentation"
+              },
+              {
+                "type": "deps",
+                "section": "Dependencies"
+              },
+              {
+                "type": "test",
+                "section": "Tests"
+              }
+            ]
+          }
+        }
+      ],
+      "@semantic-release/changelog",
+      "@semantic-release/npm",
+      "@semantic-release/github",
+      [
+        "@semantic-release/git",
+        {
+          "assets": [
+            "CHANGELOG.md",
+            "package.json"
+          ]
+        }
+      ]
+    ]
+  },
   "scripts": {
     "clean": "aegir clean",
     "lint": "aegir lint",
     "build": "tsc && node esbuild.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dep-check": "aegir dep-check",
-    "start:firefox": "web-ext run --source-dir . --verbose --devtools"
+    "start:firefox": "web-ext run --source-dir . --verbose --devtools",
+    "release": "aegir release"
   },
   "dependencies": {
-    "@ipshipyard/libp2p-inspector-metrics": "^0.0.0",
-    "@ipshipyard/libp2p-inspector-ui": "^0.0.0",
-    "@libp2p/interface": "^2.1.2",
+    "@ipshipyard/libp2p-inspector-metrics": "~0.0.0",
+    "@ipshipyard/libp2p-inspector-ui": "~0.0.0",
+    "@libp2p/interface": "^2.10.2",
     "it-pipe": "^3.0.1",
     "it-pushable": "^3.2.3",
-    "it-rpc": "^1.0.0",
+    "it-rpc": "^1.1.0",
     "it-stream-types": "^2.0.2",
-    "multiformats": "^13.1.0",
+    "multiformats": "^13.3.6",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "react-syntax-highlighter": "^15.5.0",
+    "react-syntax-highlighter": "^15.6.1",
     "uint8arrays": "^5.1.0"
   },
   "devDependencies": {
     "@types/chrome": "^0.0.323",
-    "@types/react": "^19.1.4",
+    "@types/react": "^19.1.5",
     "@types/react-dom": "^19.1.5",
     "@types/react-syntax-highlighter": "^15.5.13",
-    "aegir": "^47.0.12",
-    "web-ext": "^8.1.0"
+    "aegir": "^47.0.13",
+    "web-ext": "^8.7.0"
   }
 }

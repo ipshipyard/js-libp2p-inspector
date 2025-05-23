@@ -1,6 +1,26 @@
-# js-libp2p DevTools
+# @ipshipyard/libp2p-devtools
+
+[![codecov](https://img.shields.io/codecov/c/github/ipshipyard/js-libp2p-inspector.svg?style=flat-square)](https://codecov.io/gh/ipshipyard/js-libp2p-inspector)
+[![CI](https://img.shields.io/github/actions/workflow/status/ipshipyard/js-libp2p-inspector/js-test-and-release.yml?branch=main\&style=flat-square)](https://github.com/ipshipyard/js-libp2p-inspector/actions/workflows/js-test-and-release.yml?query=branch%3Amain)
 
 > Browser DevTools plugin to inspect a libp2p node running on the current page
+
+# About
+
+<!--
+
+!IMPORTANT!
+
+Everything in this README between "# About" and "# Install" is automatically
+generated and will be overwritten the next time the doc generator is run.
+
+To make changes to this section, please update the @packageDocumentation section
+of src/index.js or src/index.ts
+
+To experiment with formatting, please run "npm run docs" from the root of this
+repo and examine the changes made.
+
+-->
 
 A [DevTools](https://developer.chrome.com/docs/devtools) plugin that adds a "libp2p" tab to your developer tools that contacts a libp2p node running on the current page.
 
@@ -17,8 +37,9 @@ Until this plugin is published on the relevant browser plugin stores, please run
 1. Clone this repo
 2. Run `npm i && npm run build`
 3. Install as an unpacked/temporary add on for your browser:
-    - Chrome: [How to load an unpacked extension](https://knowledge.workspace.google.com/kb/load-unpacked-extensions-000005962)
-    - Firefox: [How to install temporary add-ons](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Your_first_WebExtension#installing)
+
+- Chrome: [How to load an unpacked extension](https://knowledge.workspace.google.com/kb/load-unpacked-extensions-000005962)
+- Firefox: [How to install temporary add-ons](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Your_first_WebExtension#installing)
 
 ### 2. App installation
 
@@ -30,7 +51,7 @@ import { inspectorMetrics } from '@ipshipyard/libp2p-inspector-metrics'
 
 const node = await createLibp2p({
   metrics: inspectorMetrics(),
-  //... other options here
+  //... other options her
 })
 ```
 
@@ -57,15 +78,42 @@ Browse to your webapp and open the DevTools, you should see a "libp2p" tab towar
 ## What's next?
 
 1. Tests
-  - There aren't a lot of tests here yet
+
+- There aren't a lot of tests here yet
+
 2. Better UI
-  - It's quite rough
+
+- It's quite rough
+
 3. Graphs
-  - We don't do much with the collected metrics yet. It would be nice to use Chart.js or similar to show some useful graphs
-  - Bonus points for letting the user define their own graphs a la Grafana/Prometheus
-  - More bonus points for being able to export/import graph configs
+
+- We don't do much with the collected metrics yet. It would be nice to use Chart.js or similar to show some useful graphs
+- Bonus points for letting the user define their own graphs a la Grafana/Prometheus
+- More bonus points for being able to export/import graph configs
+
 4. Dynamic panels
-  - We should be able to inspect the libp2p node's configured services (or protocols?) and, for example, only show a DHT tab if the DHT is configured
+
+- We should be able to inspect the libp2p node's configured services (or protocols?) and, for example, only show a DHT tab if the DHT is configured
+
 5. Light theme support
-  - There are partial overrides for light theme font/background/border colours but we need better detection of when it's enabled
+
+- There are partial overrides for light theme font/background/border colours but we need better detection of when it's enabled
+
 6. ??? more features here
+
+# Install
+
+```console
+$ npm i @ipshipyard/libp2p-devtools
+```
+
+# License
+
+Licensed under either of
+
+- Apache 2.0, ([LICENSE-APACHE](https://github.com/ipshipyard/js-libp2p-inspector/blob/main/packages/libp2p-devtools/LICENSE-APACHE) / <http://www.apache.org/licenses/LICENSE-2.0>)
+- MIT ([LICENSE-MIT](https://github.com/ipshipyard/js-libp2p-inspector/blob/main/packages/libp2p-devtools/LICENSE-MIT) / <http://opensource.org/licenses/MIT>)
+
+# Contribution
+
+Unless you explicitly state otherwise, any contribution intentionally submitted for inclusion in the work by you, as defined in the Apache-2.0 license, shall be dual licensed as above, without any additional terms or conditions.

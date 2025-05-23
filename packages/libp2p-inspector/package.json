@@ -4,7 +4,7 @@
   "description": "Inspect a running libp2p node",
   "author": "info@ipshipyard.com",
   "license": "Apache-2.0 OR MIT",
-  "homepage": "https://github.com/ipshipyard/js-libp2p-inspector/tree/main/packages/libp2p-inspector-metrics#readme",
+  "homepage": "https://github.com/ipshipyard/js-libp2p-inspector/tree/main/packages/libp2p-inspector#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ipshipyard/js-libp2p-inspector.git"
@@ -29,6 +29,105 @@
     "!dist/test",
     "!**/*.tsbuildinfo"
   ],
+  "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "import": "./dist/src/index.js"
+    }
+  },
+  "release": {
+    "branches": [
+      "main"
+    ],
+    "plugins": [
+      [
+        "@semantic-release/commit-analyzer",
+        {
+          "preset": "conventionalcommits",
+          "releaseRules": [
+            {
+              "breaking": true,
+              "release": "major"
+            },
+            {
+              "revert": true,
+              "release": "patch"
+            },
+            {
+              "type": "feat",
+              "release": "minor"
+            },
+            {
+              "type": "fix",
+              "release": "patch"
+            },
+            {
+              "type": "docs",
+              "release": "patch"
+            },
+            {
+              "type": "test",
+              "release": "patch"
+            },
+            {
+              "type": "deps",
+              "release": "patch"
+            },
+            {
+              "scope": "no-release",
+              "release": false
+            }
+          ]
+        }
+      ],
+      [
+        "@semantic-release/release-notes-generator",
+        {
+          "preset": "conventionalcommits",
+          "presetConfig": {
+            "types": [
+              {
+                "type": "feat",
+                "section": "Features"
+              },
+              {
+                "type": "fix",
+                "section": "Bug Fixes"
+              },
+              {
+                "type": "chore",
+                "section": "Trivial Changes"
+              },
+              {
+                "type": "docs",
+                "section": "Documentation"
+              },
+              {
+                "type": "deps",
+                "section": "Dependencies"
+              },
+              {
+                "type": "test",
+                "section": "Tests"
+              }
+            ]
+          }
+        }
+      ],
+      "@semantic-release/changelog",
+      "@semantic-release/npm",
+      "@semantic-release/github",
+      [
+        "@semantic-release/git",
+        {
+          "assets": [
+            "CHANGELOG.md",
+            "package.json"
+          ]
+        }
+      ]
+    ]
+  },
   "scripts": {
     "clean": "aegir clean",
     "lint": "aegir lint",
@@ -36,21 +135,22 @@
     "test": "aegir test -t node",
     "test:electron-main": "aegir test -t node",
     "dep-check": "aegir dep-check",
-    "start": "npm run build && electron --trace-warnings --unhandled-rejections=strict ./dist/src/main/index.js"
+    "start": "npm run build && electron --trace-warnings --unhandled-rejections=strict ./dist/src/main/index.js",
+    "release": "aegir release"
   },
   "dependencies": {
-    "@ipshipyard/libp2p-inspector-metrics": "^0.0.0",
-    "@ipshipyard/libp2p-inspector-ui": "^0.0.0",
-    "@libp2p/interface": "^2.9.0",
-    "@libp2p/peer-id": "^5.1.2",
-    "@libp2p/utils": "^6.6.4",
+    "@ipshipyard/libp2p-inspector-metrics": "~0.0.0",
+    "@ipshipyard/libp2p-inspector-ui": "~0.0.0",
+    "@libp2p/interface": "^2.10.2",
+    "@libp2p/peer-id": "^5.1.5",
+    "@libp2p/utils": "^6.6.5",
     "@multiformats/multiaddr": "^12.4.0",
     "@types/multicast-dns": "^7.2.4",
-    "electron": "^36.2.1",
+    "electron": "^36.3.1",
     "it-length-prefixed": "^10.0.1",
     "it-pipe": "^3.0.1",
     "it-pushable": "^3.2.3",
-    "it-rpc": "^1.0.4",
+    "it-rpc": "^1.1.0",
     "multicast-dns": "^7.2.5",
     "multiformats": "^13.3.6",
     "race-signal": "^1.1.3",
@@ -61,13 +161,13 @@
     "uint8arrays": "^5.1.0"
   },
   "devDependencies": {
-    "@libp2p/webrtc": "^5.2.14",
+    "@libp2p/webrtc": "^5.2.15",
     "@playwright/test": "^1.52.0",
-    "@types/react": "^19.1.4",
+    "@types/react": "^19.1.5",
     "@types/react-dom": "^19.1.5",
-    "aegir": "^47.0.12",
+    "aegir": "^47.0.13",
     "fast-glob": "^3.3.3",
-    "libp2p": "^2.8.7",
+    "libp2p": "^2.8.8",
     "playwright-core": "^1.52.0"
   }
 }
