@@ -97,7 +97,7 @@ Browse to your webapp and open the DevTools, you should see a "libp2p" tab towar
 
 5. Light theme support
 
-- There are partial overrides for light theme font/background/border colours but we need better detection of when it's enabled
+- There are partial overrides for light theme font/background/border colors but we need better detection of when it's enabled
 
 6. ??? more features here
 

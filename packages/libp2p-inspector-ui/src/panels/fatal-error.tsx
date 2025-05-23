@@ -1,8 +1,8 @@
-import type { JSX } from 'react'
 import './fatal-error.css'
-import { FloatingPanel } from './floating-panel.tsx'
-import { ErrorPanel } from './error.tsx'
 import { Button } from './button.tsx'
+import { ErrorPanel } from './error.tsx'
+import { FloatingPanel } from './floating-panel.tsx'
+import type { JSX } from 'react'
 
 interface FatalErrorPanelProps {
   error: Error

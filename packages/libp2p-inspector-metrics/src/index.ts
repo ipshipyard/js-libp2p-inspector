@@ -5,10 +5,10 @@
  *
  * ```typescript
  * import { createLibp2p } from 'libp2p'
- * import { devToolsMetrics } from '@ipshipyard/libp2p-inspector-metrics'
+ * import { inspectorMetrics } from '@ipshipyard/libp2p-inspector-metrics'
  *
  * const node = await createLibp2p({
- *   metrics: devToolsMetrics()
+ *   metrics: inspectorMetrics()
  * })
  * ```
  *

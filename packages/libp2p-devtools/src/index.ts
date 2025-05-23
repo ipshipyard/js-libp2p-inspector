@@ -16,8 +16,8 @@
  * 1. Clone this repo
  * 2. Run `npm i && npm run build`
  * 3. Install as an unpacked/temporary add on for your browser:
- *   - Chrome: [How to load an unpacked extension](https://knowledge.workspace.google.com/kb/load-unpacked-extensions-000005962)
- *   - Firefox: [How to install temporary add-ons](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Your_first_WebExtension#installing)
+ * - Chrome: [How to load an unpacked extension](https://knowledge.workspace.google.com/kb/load-unpacked-extensions-000005962)
+ * - Firefox: [How to install temporary add-ons](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Your_first_WebExtension#installing)
  *
  * ### 2. App installation
  *
@@ -66,7 +66,7 @@
  * 4. Dynamic panels
  *   - We should be able to inspect the libp2p node's configured services (or protocols?) and, for example, only show a DHT tab if the DHT is configured
  * 5. Light theme support
- *   - There are partial overrides for light theme font/background/border colours but we need better detection of when it's enabled
+ *   - There are partial overrides for light theme font/background/border colors but we need better detection of when it's enabled
  * 6. ??? more features here
  */
 export {}

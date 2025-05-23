@@ -21,7 +21,6 @@ class RendererIPC implements InspectorIPC {
 
   onConnected (callback: (err: Error | undefined) => void): void {
     globalThis.inspector.onConnected((err) => {
-      console.info('invoking onConnected callback')
       callback(err)
     })
   }

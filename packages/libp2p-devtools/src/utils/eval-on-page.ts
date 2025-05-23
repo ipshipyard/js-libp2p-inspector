@@ -6,10 +6,10 @@ export async function evalOnPage <R, T = R> (src: string, transform: (arg: R) =>
   const deferred = Promise.withResolvers<T>()
 
   // test to make sure @ipshipyard/libp2p-inspector-metrics is present on the page
-  browser.devtools.inspectedWindow.eval<R>(src, (result, isExecption) => {
-    if (isExecption != null) {
+  browser.devtools.inspectedWindow.eval<R>(src, (result, isException) => {
+    if (isException != null) {
       // eslint-disable-next-line no-console
-      console.error('could not eval', src, isExecption)
+      console.error('could not eval', src, isException)
       deferred.reject(new Error('Exception'))
       return
     }
