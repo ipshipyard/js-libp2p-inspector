@@ -2,13 +2,28 @@ import { enable, disable } from '@libp2p/logger'
 import { peerIdFromString } from '@libp2p/peer-id'
 import { multiaddr } from '@multiformats/multiaddr'
 import { gatherCapabilities } from '../utils/gather-capabilities.js'
+import { getComponent } from '../utils/get-implementation.ts'
 import { getPeers } from '../utils/get-peers.js'
 import { getPubSub } from '../utils/get-pubsub.js'
 import { getSelf } from '../utils/get-self.js'
 import type { MetricsRPC } from './index.js'
 import type { InspectorMetricsComponents } from '../index.js'
+import type { Identify } from '@libp2p/identify'
 import type { PeerId } from '@libp2p/interface'
+import type { Ping } from '@libp2p/ping'
 import type { Multiaddr } from '@multiformats/multiaddr'
+
+function toPeerIdOrMultiaddr (peerIdOrMultiaddr: string): PeerId | Multiaddr {
+  let peer: PeerId | Multiaddr
+
+  try {
+    peer = peerIdFromString(peerIdOrMultiaddr)
+  } catch {
+    peer = multiaddr(peerIdOrMultiaddr)
+  }
+
+  return peer
+}
 
 export function metricsRpc (components: InspectorMetricsComponents): MetricsRPC {
   const log = components.logger.forComponent('libp2p:devtools-metrics:metrics-rpc')
@@ -35,15 +50,22 @@ export function metricsRpc (components: InspectorMetricsComponents): MetricsRPC 
       debug = namespace ?? ''
     },
     openConnection: async (peerIdOrMultiaddr, options?) => {
-      let peer: PeerId | Multiaddr
+      const peer = toPeerIdOrMultiaddr(peerIdOrMultiaddr)
+      const conn = await components.connectionManager.openConnection(peer, options)
 
-      try {
-        peer = peerIdFromString(peerIdOrMultiaddr)
-      } catch {
-        peer = multiaddr(peerIdOrMultiaddr)
+      return {
+        id: conn.id,
+        remoteAddr: conn.remoteAddr,
+        remotePeer: conn.remotePeer,
+        tags: conn.tags,
+        direction: conn.direction,
+        timeline: conn.timeline,
+        multiplexer: conn.multiplexer,
+        encryption: conn.encryption,
+        status: conn.status,
+        limits: conn.limits,
+        rtt: conn.rtt
       }
-
-      await components.connectionManager.openConnection(peer, options)
     },
     closeConnection: async (peerId, options?) => {
       await Promise.all(
@@ -75,6 +97,19 @@ export function metricsRpc (components: InspectorMetricsComponents): MetricsRPC 
       async getSubscribers (component: string, topic: string) {
         return getPubSub(component, components).getSubscribers(topic)
       }
+    },
+    ping: async (component, peerIdOrMultiaddr, options) => {
+      const ping = getComponent<Ping>(component, components, '@libp2p/ping')
+      const peer = toPeerIdOrMultiaddr(peerIdOrMultiaddr)
+
+      return ping.ping(peer, options)
+    },
+    identify: async (component, peerIdOrMultiaddr, options) => {
+      const identify = getComponent<Identify>(component, components, '@libp2p/identify')
+      const peer = toPeerIdOrMultiaddr(peerIdOrMultiaddr)
+      const connection = await components.connectionManager.openConnection(peer, options)
+
+      return identify.identify(connection, options)
     }
   }
 }

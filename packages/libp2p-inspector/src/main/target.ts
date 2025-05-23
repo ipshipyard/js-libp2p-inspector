@@ -1,18 +1,19 @@
-import { SOURCE_CLIENT, type InspectorMessage } from '@ipshipyard/libp2p-inspector-metrics'
 import { createConnection } from 'node:net'
+import { SOURCE_CLIENT } from '@ipshipyard/libp2p-inspector-metrics'
 import { Queue } from '@libp2p/utils/queue'
-import { duplex } from 'stream-to-it'
-import { pushable, type Pushable } from 'it-pushable'
 import { encode, decode } from 'it-length-prefixed'
+import { pushable } from 'it-pushable'
+import { base64 } from 'multiformats/bases/base64'
+import { raceSignal } from 'race-signal'
+import { duplex } from 'stream-to-it'
 import { fromString as uint8ArrayFromString } from 'uint8arrays/from-string'
 import { toString as uint8ArrayToString } from 'uint8arrays/to-string'
-import { base64 } from 'multiformats/bases/base64'
-import type { InspectTargetStatus } from '../ipc/index.ts'
 import type { Events } from './events.ts'
+import type { InspectTargetStatus } from '../ipc/index.ts'
+import type { InspectorMessage } from '@ipshipyard/libp2p-inspector-metrics'
 import type { AbortOptions, PeerId } from '@libp2p/interface'
 import type { Multiaddr } from '@multiformats/multiaddr'
-import { raceSignal } from 'race-signal'
-import delay from 'delay'
+import type { Pushable } from 'it-pushable'
 
 /**
  * A remote process running the inspector metrics
@@ -58,7 +59,7 @@ export class Target {
     }
   }
 
-  addAddress (ma: Multiaddr) {
+  addAddress (ma: Multiaddr): void {
     if (this.multiaddrs.find(addr => addr.equals(ma))) {
       return
     }
@@ -75,15 +76,15 @@ export class Target {
     })))
   }
 
-  connect () {
+  connect (): void {
     this.setStatus('connected')
   }
 
-  disconnect () {
+  disconnect (): void {
     this.setStatus('ready')
   }
 
-  setStatus (status: InspectTargetStatus) {
+  setStatus (status: InspectTargetStatus): void {
     this.status = status
     this.events.updateTargets()
   }
@@ -103,7 +104,6 @@ export class Target {
   }
 
   private async _openConnection (ma: Multiaddr, options?: AbortOptions): Promise<void> {
-
     const result = Promise.withResolvers<void>()
 
     const socket = createConnection(ma.toOptions(), () => {
@@ -128,19 +128,21 @@ export class Target {
 
                 result.resolve()
               } else if (message.type === 'libp2p-rpc') {
-                // got RPC message
-                this.events.receiveRPC(base64.decode(message.message))
+                if (this.status === 'connected') {
+                  // got RPC message
+                  this.events.receiveRPC(base64.decode(message.message))
+                }
               } else {
                 throw new Error(`Unknown message - ${message}`)
               }
             } catch (err) {
+              // eslint-disable-next-line no-console
               console.error('could not parse message', buf.toString(), err)
             }
           }
         })()
       ])
         .catch(err => {
-          console.error('socket error during parsing messages', err)
           result.reject(err)
         })
 
@@ -155,8 +157,6 @@ export class Target {
     })
     socket.on('error', (err: any) => {
       this.setStatus('failed')
-
-      console.error('socket error event emitted', err)
       result.reject(err)
     })
 

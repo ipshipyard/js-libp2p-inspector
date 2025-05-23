@@ -3,11 +3,12 @@ import './floating-panel.css'
 
 interface FloatingPanelProps {
   children?: any
+  className?: string
 }
 
-export function FloatingPanel ({ children }: FloatingPanelProps) {
+export function FloatingPanel ({ children, className }: FloatingPanelProps) {
   return (
-    <div className={'FloatingPanel'}>
+    <div className={`FloatingPanel ${className ?? ''}`}>
       {children}
     </div>
   )

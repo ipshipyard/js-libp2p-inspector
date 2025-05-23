@@ -6,7 +6,7 @@
  */
 
 import { SOURCE_METRICS, SOURCE_CLIENT } from '@ipshipyard/libp2p-inspector-metrics'
-import { SOURCE_SERVICE_WORKER } from './app.tsx'
+import { SOURCE_SERVICE_WORKER } from './constants.js'
 import { getBrowserInstance } from './utils/get-browser.js'
 import type { DevToolsMessage } from './app.tsx'
 

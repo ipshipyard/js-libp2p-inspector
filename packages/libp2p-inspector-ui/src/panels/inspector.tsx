@@ -9,6 +9,8 @@ import { Routing } from './routing/index.js'
 import type { MetricsRPC, Peer } from '@ipshipyard/libp2p-inspector-metrics'
 import type { Message } from '@libp2p/interface'
 import type { ReactElement } from 'react'
+import { Ping } from './ping.tsx'
+import { Identify } from './identify.tsx'
 
 export interface InspectorProps {
   self: Peer
@@ -28,27 +30,65 @@ export function Inspector ({ self, copyToClipboard, peers, debug, metrics, capab
     <img src={libp2pLogo} height={24} width={24} className={'Icon'} />
   )
 
-  const pubSubComponent = findPubSubComponent(capabilities)
+  const tabs = [{
+    name: 'Node',
+    panel: (index: string) => <Node self={self} copyToClipboard={copyToClipboard} key={`panel-${index}`} />
+  }, {
+    name: 'Peers',
+    panel: (index: string) => <Peers peers={peers} metrics={metrics} copyToClipboard={copyToClipboard} key={`panel-${index}`} />
+  }, {
+    name: 'Debug',
+    panel: (index: string) => <Debug metrics={metrics} debug={debug} key={`panel-${index}`} />
+  }, {
+    name: 'Routing',
+    panel: (index: string) => <Routing metrics={metrics} key={`panel-${index}`} />
+  }, {
+    capability: '@libp2p/ping',
+    name: 'Ping',
+    component: '',
+    panel: (index: string, component?: string) => <Ping component={component ?? ''} metrics={metrics} key={`panel-${index}`} />
+  }, {
+    capability: '@libp2p/identify',
+    name: 'Identify',
+    component: '',
+    panel: (index: string, component?: string) => <Identify component={component ?? ''} metrics={metrics} key={`panel-${index}`} />
+  }, {
+    capability: '@libp2p/pubsub',
+    name: 'PubSub',
+    component: '',
+    panel: (index: string, component?: string) => <PubSub component={component ?? ''} metrics={metrics} pubsub={pubsub} key={`panel-${index}`} />
+  }]
 
-  if (pubSubComponent != null) {
-    panels.push('PubSub')
+  for (const tab of tabs) {
+    if (tab.capability == null) {
+      continue
+    }
+
+    const component = findComponent(capabilities, tab.capability)
+
+    if (component != null) {
+      tab.component = component
+      panels.push(tab.name)
+    }
   }
 
   return (
     <>
       <Menu logo={logo} onClick={(panel) => { setPanel(panel) }} panel={panel} options={panels} />
-      { panel === 'Node' ? <Node self={self} copyToClipboard={copyToClipboard} /> : undefined }
-      { panel === 'Peers' ? <Peers peers={peers} metrics={metrics} copyToClipboard={copyToClipboard} /> : undefined }
-      { panel === 'Debug' ? <Debug metrics={metrics} debug={debug} /> : undefined }
-      { panel === 'Routing' ? <Routing metrics={metrics} /> : undefined }
-      { panel === 'PubSub' ? <PubSub component={pubSubComponent ?? ''} metrics={metrics} pubsub={pubsub} /> : undefined}
+      {
+        tabs.map(tab => {
+          if (panel === tab.name) {
+            return tab.panel(tab.name, tab.component)
+          }
+        })
+      }
     </>
   )
 }
 
-function findPubSubComponent (capabilities: Record<string, string[]>): string | undefined {
+function findComponent (capabilities: Record<string, string[]>, capability: string): string | undefined {
   for (const component of Object.keys(capabilities)) {
-    if (capabilities[component].includes('@libp2p/pubsub')) {
+    if (capabilities[component].includes(capability)) {
       return component
     }
   }

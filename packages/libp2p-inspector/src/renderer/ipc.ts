@@ -1,14 +1,14 @@
-import { peerIdFromString } from "@libp2p/peer-id"
-import { multiaddr } from "@multiformats/multiaddr"
-import type { PeerId } from "@libp2p/interface"
-import type { InspectorIPC, InspectTarget } from "../ipc/index.ts"
+import { peerIdFromString } from '@libp2p/peer-id'
+import { multiaddr } from '@multiformats/multiaddr'
+import type { InspectorIPC, InspectTarget } from '../ipc/index.ts'
+import type { PeerId } from '@libp2p/interface'
 
 declare global {
   var inspector: InspectorIPC
 }
 
 class RendererIPC implements InspectorIPC {
-  onTargets(callback: (targets: InspectTarget[]) => void): void {
+  onTargets (callback: (targets: InspectTarget[]) => void): void {
     // register for updates from main thread
     globalThis.inspector.onTargets((targets: any[]) => {
       callback(targets.map(node => ({
@@ -19,32 +19,31 @@ class RendererIPC implements InspectorIPC {
     })
   }
 
-  onConnected(callback: (err: Error | undefined) => void): void {
+  onConnected (callback: (err: Error | undefined) => void): void {
     globalThis.inspector.onConnected((err) => {
-      console.info('wat', err)
-
       callback(err)
     })
   }
-  onRPC(callback: (message: Uint8Array) => void): void {
+
+  onRPC (callback: (message: Uint8Array) => void): void {
     globalThis.inspector.onRPC((message) => {
       callback(message)
     })
   }
 
-  connect(address: string | PeerId): void {
+  connect (address: string | PeerId): void {
     globalThis.inspector.connect(address.toString())
   }
 
-  cancelConnect(): void {
+  cancelConnect (): void {
     globalThis.inspector.cancelConnect()
   }
 
-  disconnect(): void {
+  disconnect (): void {
     globalThis.inspector.disconnect()
   }
 
-  sendRPC(message: Uint8Array): void {
+  sendRPC (message: Uint8Array): void {
     globalThis.inspector.sendRPC(message)
   }
 }

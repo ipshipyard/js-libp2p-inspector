@@ -1,8 +1,9 @@
-import { app, BrowserWindow, ipcMain } from 'electron'
 import * as path from 'path'
+import { app, BrowserWindow, ipcMain, protocol } from 'electron'
 import { discovery } from './discovery.js'
 import { Events } from './events.ts'
 import type { Target } from './target.ts'
+import fs from 'node:fs'
 
 let mainWindow: BrowserWindow | undefined
 
@@ -31,6 +32,7 @@ events.addEventListener('rpc', (evt) => {
 ipcMain.on('libp2p-inspector:connect', (_event, value) => {
   try {
     if (value.startsWith('/')) {
+      // eslint-disable-next-line no-console
       console.log('libp2p-inspector:connect connect to multiaddr', value)
       throw new Error('Not implemented')
     } else {
@@ -50,6 +52,7 @@ ipcMain.on('libp2p-inspector:connect', (_event, value) => {
 })
 
 ipcMain.on('libp2p-inspector:cancel-connect', (_event, value) => {
+  // eslint-disable-next-line no-console
   console.log('libp2p-inspector:cancel-connect', value)
 })
 
@@ -67,7 +70,7 @@ ipcMain.on('libp2p-inspector:disconnect', (_event) => {
   }
 })
 
-function createWindow() {
+function createWindow (): void {
   // Create the browser window.
   mainWindow = new BrowserWindow({
     height: 600,
@@ -76,7 +79,7 @@ function createWindow() {
       preload: path.join(import.meta.dirname, 'preload.cjs')
     }
   })
-  mainWindow.loadFile(path.join(import.meta.dirname, '../../index.html'));
+  mainWindow.loadFile(path.join(import.meta.dirname, '../../../index.html'))
 
   if (process.env.NODE_ENV !== 'test') {
     mainWindow.webContents.openDevTools()
@@ -91,12 +94,12 @@ function createWindow() {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
-  createWindow();
+  createWindow()
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
-    if (BrowserWindow.getAllWindows().length === 0) createWindow()
+    if (BrowserWindow.getAllWindows().length === 0) { createWindow() }
   })
 })
 
@@ -105,6 +108,6 @@ app.whenReady().then(() => {
 // explicitly with Cmd + Q.
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
-    app.quit();
+    app.quit()
   }
 })

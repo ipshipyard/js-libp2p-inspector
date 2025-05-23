@@ -1,0 +1,8 @@
+.Console {
+  background-color: var(--dark-background-color);
+  color: var(---dark-text-color);
+  padding: 12px;
+  border-radius: 10px;
+  overflow: scroll;
+  white-space: nowrap;
+}

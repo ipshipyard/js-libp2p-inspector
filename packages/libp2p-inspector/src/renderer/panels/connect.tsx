@@ -1,4 +1,4 @@
-import { FloatingPanel, Button, TextInput, Heading, Group, Libp2pIcon } from '@ipshipyard/libp2p-inspector-ui'
+import { FloatingPanel, Button, TextInput, Heading, Group, Libp2pIcon, ShipyardIcon, Footer } from '@ipshipyard/libp2p-inspector-ui'
 import { useState } from 'react'
 import { TargetListPanel } from './target-list.tsx'
 import type { PeerId } from '@libp2p/interface'
@@ -17,25 +17,28 @@ export const ConnectPanel = ({ targets, onConnect }: ConnectingPanelProps): JSX.
 
   return (
     <>
-      <FloatingPanel>
+      <FloatingPanel className='ConnectPanel'>
         <Group>
           <Libp2pIcon height={64} width={64} style={{marginBottom: 8}} />
           <Heading>
             <h1>Connect to libp2p</h1>
           </Heading>
-          <p>Enter a multiaddr or choose from a detected node</p>
+{/*           <p>Enter a multiaddr or choose from a detected node</p>
           <form onSubmit={(evt) => onConnect}>
             <TextInput type="text" value={address} placeholder="/ip4/127.0.0.1/tcp/1234" onChange={(e) => { setAddress(e.target.value) }} />
             <Button disabled={connecting} onClick={(evt) => onConnect(evt, address)} primary={true}>Connect</Button>
           </form>
         </Group>
         <Group>
-          <h2>Detected nodes</h2>
+          <h2>Detected nodes</h2> */}
           <TargetListPanel targets={targets} onConnect={onConnect} />
         </Group>
         {output !== '' ? (
           <pre>{output}</pre>
         ) : ('')}
+        <Footer>
+          <small>With ❤️ from <a href='https://ipshipyard.com/' target='_blank'><ShipyardIcon /> SHIPYARD</a></small>
+        </Footer>
       </FloatingPanel>
     </>
   )

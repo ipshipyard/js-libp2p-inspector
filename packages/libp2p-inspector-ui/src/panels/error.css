@@ -1,0 +1,8 @@
+.Error {
+  background-color: var(--warning-button-background-color);
+  color: var(--warning-button-text-color);
+  padding: 12px;
+  border-radius: 10px;
+  overflow: scroll;
+  white-space: nowrap;
+}

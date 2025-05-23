@@ -2,7 +2,7 @@ import { cidCodec } from './codecs/cid.js'
 import { customProgressEventCodec } from './codecs/custom-progress-event.js'
 import { multiaddrCodec } from './codecs/multiaddr.js'
 import { peerIdCodec } from './codecs/peer-id.js'
-import type { ContentRouting, PeerId, PeerRouting, AbortOptions, PubSubRPCMessage, SubscriptionChangeData } from '@libp2p/interface'
+import type { ContentRouting, PeerId, PeerRouting, AbortOptions, PubSubRPCMessage, SubscriptionChangeData, IdentifyResult, Direction, ConnectionTimeline, ConnectionStatus, ConnectionLimits } from '@libp2p/interface'
 import type { OpenConnectionOptions } from '@libp2p/interface-internal'
 import type { Multiaddr } from '@multiformats/multiaddr'
 import type { ValueCodec } from 'it-rpc'
@@ -47,6 +47,20 @@ export interface Peer {
   protocols: string[]
 }
 
+export interface Connection {
+  id: string
+  remoteAddr: Multiaddr
+  remotePeer: PeerId
+  tags: string[]
+  direction: Direction
+  timeline: ConnectionTimeline
+  multiplexer?: string
+  encryption?: string
+  status: ConnectionStatus
+  limits?: ConnectionLimits
+  rtt?: number
+}
+
 /**
  * RPC operations exposed by the metrics
  */
@@ -64,7 +78,7 @@ export interface MetricsRPC {
   /**
    * Open a connection to the passed peer or multiaddr
    */
-  openConnection(peerIdOrMultiaddr: string, options?: OpenConnectionOptions): Promise<void>
+  openConnection(peerIdOrMultiaddr: string, options?: OpenConnectionOptions): Promise<Connection>
 
   /**
    * Close connections open to the specified peer
@@ -109,7 +123,14 @@ export interface MetricsRPC {
      * Publish a message to a given topic
      */
     publish (component: string, topic: string, message: Uint8Array): Promise<void>
-  }
+  },
+
+  /**
+   * Ping a remote node and return the RTT
+   */
+  ping(component: string, peerIdOrMultiaddr: string, options?: AbortOptions): Promise<number>
+
+  identify(component: string, peerIdOrMultiaddr: string, options?: AbortOptions): Promise<IdentifyResult>
 }
 
 export interface InspectorRPCEvents {

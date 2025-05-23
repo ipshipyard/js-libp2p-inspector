@@ -5,9 +5,7 @@
     "jsx": "react-jsx"
   },
   "include": [
-    "main",
-    "renderer",
-    "ipc",
+    "src",
     "test"
   ]
 }

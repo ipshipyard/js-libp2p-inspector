@@ -2,7 +2,7 @@ import { expect } from '@playwright/test'
 import { _electron as electron } from 'playwright-core'
 import { getLibp2p } from './fixtures/get-libp2p.ts'
 import type { Libp2p } from '@libp2p/interface'
-import type { ElectronApplication, Page } from 'playwright-core'
+import type { ElectronApplication } from 'playwright-core'
 
 const TEST_USER_AGENT = 'libp2p/test'
 

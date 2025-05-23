@@ -3,11 +3,12 @@ import './panel.css'
 
 interface PanelProps {
   children?: any[] | any
+  className?: string
 }
 
-export function Panel ({ children }: PanelProps) {
+export function Panel ({ children, className }: PanelProps) {
   return (
-    <div className={'Panel'}>
+    <div className={`Panel ${className ?? ''}`}>
       {children}
     </div>
   )

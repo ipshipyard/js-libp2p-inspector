@@ -20,16 +20,16 @@ export interface DialPeerState {
   details: JSX.Element[]
 }
 
-const dialEvents: Record<string, string | ReactElement | ((args: any) => string | ReactElement)> = {
+const dialEvents: Record<string, (key: string, className: string, args: any) => ReactElement> = {
   // internal dial events
-  'dial-queue:already-connected': 'Already connected to this peer',
-  'dial-queue:add-to-dial-queue': 'Adding dial to queue',
-  'dial-queue:already-in-dial-queue': 'Dial to this peer already in queue',
-  'dial-queue:start-dial': 'Dialing peer',
-  'dial-queue:calculated-addresses': (addreseses: Address[]) => (
+  'dial-queue:already-connected': (key, className) => <p key={key} className={className}>Already connected to this peer</p>,
+  'dial-queue:add-to-dial-queue': (key, className) => <p key={key} className={className}>Adding dial to queue</p>,
+  'dial-queue:already-in-dial-queue': (key, className) => <p key={key} className={className}>Dial to this peer already in queue</p>,
+  'dial-queue:start-dial': (key, className) => <p key={key} className={className}>Dialing peer</p>,
+  'dial-queue:calculated-addresses': (key, className, addreseses: Address[]) => (
     <>
-      Calculated addresses
-      <ol>
+      <p key={`${key}-1`} className={className}>Calculated addresses</p>
+      <ol key={`${key}-2`} className={className}>
         {
           addreseses.map((address, index) => (
             <li key={`address-${index}`} className='calculated-address'>{address.multiaddr.toString()}</li>
@@ -38,39 +38,41 @@ const dialEvents: Record<string, string | ReactElement | ((args: any) => string 
       </ol>
     </>
   ),
-  'transport-manager:selected-transport': (transport: string) => `Selected transport ${transport}`,
+  'transport-manager:selected-transport': (key, className, transport: string) => <p key={key} className={className}>Selected transport {transport}</p>,
 
   // webrtc
-  'webrtc:initiate-connection': 'WebRTC initiating connection',
-  'webrtc:dial-relay': 'Dialing relay',
-  'webrtc:reuse-relay-connection': 'Already connected to relay',
-  'webrtc:open-signaling-stream': 'Open signaling stream',
-  'webrtc:send-sdp-offer': 'Sending SDP offer',
-  'webrtc:read-sdp-answer': 'Reading SDP answer',
-  'webrtc:read-ice-candidates': 'Read ICE candidates',
-  'webrtc:add-ice-candidate': (candidate) => (
-    <>
-      Add ICE candidate <span className='ice-candidate'>{candidate}</span>
-    </>
-  ),
-  'webrtc:end-of-ice-candidates': 'End of ICE candidates',
-  'webrtc:close-signaling-stream': 'Closing signaling stream',
+  'webrtc:initiate-connection': (key, className) => <p key={key} className={className}>WebRTC initiating connection</p>,
+  'webrtc:dial-relay': (key, className) => <p key={key} className={className}>Dialing relay</p>,
+  'webrtc:reuse-relay-connection': (key, className) => <p key={key} className={className}>Already connected to relay</p>,
+  'webrtc:open-signaling-stream': (key, className) => <p key={key} className={className}>Open signaling stream</p>,
+  'webrtc:send-sdp-offer': (key, className) => <p key={key} className={className}>Sending SDP offer</p>,
+  'webrtc:read-sdp-answer': (key, className) => <p key={key} className={className}>Reading SDP answer</p>,
+  'webrtc:read-ice-candidates': (key, className) => <p key={key} className={className}>Read ICE candidates</p>,
+  'webrtc:add-ice-candidate': (key, className, candidate) => <p key={key} className={className}>Add ICE candidate <span className='ice-candidate'>{candidate}</span></p>,
+  'webrtc:end-of-ice-candidates': (key, className) => <p key={key} className={className}>End of ICE candidates</p>,
+  'webrtc:close-signaling-stream': (key, className) => <p key={key} className={className}>Closing signaling stream</p>,
 
   // circuit relay
-  'circuit-relay:open-connection': 'Connecting to relay',
-  'circuit-relay:reuse-connection': 'Already connected to relay',
-  'circuit-relay:open-hop-stream': 'Opening hop stream',
-  'circuit-relay:write-connect-message': 'Sending CONNECT',
-  'circuit-relay:read-connect-response': 'Reading CONNECT response',
+  'circuit-relay:open-connection': (key, className) => <p key={key} className={className}>Connecting to relay</p>,
+  'circuit-relay:reuse-connection': (key, className) => <p key={key} className={className}>Already connected to relay</p>,
+  'circuit-relay:open-hop-stream': (key, className) => <p key={key} className={className}>Opening hop stream</p>,
+  'circuit-relay:write-connect-message': (key, className) => <p key={key} className={className}>Sending CONNECT</p>,
+  'circuit-relay:read-connect-response': (key, className) => <p key={key} className={className}>Reading CONNECT response</p>,
 
   // websockets
-  'websockets:open-connection': 'Open connection',
+  'websockets:open-connection': (key, className) => <p key={key} className={className}>Open connection</p>,
 
   // webtransport
-  'webtransport:wait-for-session': 'Opening session',
-  'webtransport:open-authentication-stream': 'Open authentication stream',
-  'webtransport:secure-outbound-connection': 'Perform Noise handshake',
-  'webtransport:close-authentication-stream': 'Close authentication stream'
+  'webtransport:wait-for-session': (key, className) => <p key={key} className={className}>Opening session</p>,
+  'webtransport:open-authentication-stream': (key, className) => <p key={key} className={className}>Open authentication stream</p>,
+  'webtransport:secure-outbound-connection': (key, className) => <p key={key} className={className}>Perform Noise handshake</p>,
+  'webtransport:close-authentication-stream': (key, className) => <p key={key} className={className}>Close authentication stream</p>,
+
+  // tcp
+  'tcp:open-connection': (key, className) => <p key={key} className={className}>Open connection</p>,
+
+  // upgrader
+  'upgrader:encrypt-outbound-connection': (key, className) => <p key={key} className={className}>Encrypting outbound connection</p>
 }
 
 export class DialPeer extends Component<DialPeerProps, DialPeerState> {
@@ -128,21 +130,17 @@ export class DialPeer extends Component<DialPeerProps, DialPeerState> {
       onProgress: (event) => {
         const type: string = event.type
         const component = type.split(':')[0]
-        let message = dialEvents[type]
 
-        if (typeof message === 'function') {
-          message = message(event.detail)
-        }
-
-        if (message == null) {
-          message = type
+        if (dialEvents[type] == null) {
+          console.warn('No dial event handler for', type)
+          return
         }
 
         this.setState(s => {
           return {
             details: [
               ...s.details,
-              <p key={`event-${s.details.length}`} className={`DialEvent ${component}`}>{message}</p>
+              dialEvents[type](`event-${s.details.length}`, `DialEvent ${component}`, event.detail)
             ]
           }
         })
@@ -185,7 +183,7 @@ export class DialPeer extends Component<DialPeerProps, DialPeerState> {
           }} />
           <Button onClick={(evt) => this.dial(evt, this.state.target)} primary={true}>Dial</Button>
         </form>
-        {this.state.error != null ? <SmallError error={this.state.error} /> : undefined}
+        {this.state.error !== '' ? <SmallError error={this.state.error} /> : undefined}
         {this.state.details != null
           ? (
           <div className='DialEvents'>

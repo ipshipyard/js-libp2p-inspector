@@ -1,5 +1,5 @@
 import '@ipshipyard/libp2p-inspector-ui/index.css'
-import { Inspector, FloatingPanel } from '@ipshipyard/libp2p-inspector-ui'
+import { Inspector, FloatingPanel, FatalErrorPanel } from '@ipshipyard/libp2p-inspector-ui'
 import { LIBP2P_INSPECTOR_METRICS_KEY } from '@ipshipyard/libp2p-inspector-metrics'
 import { valueCodecs } from '@ipshipyard/libp2p-inspector-metrics'
 import { TypedEventEmitter } from '@libp2p/interface'
@@ -15,7 +15,6 @@ import { DetectingPanel } from './panels/detecting.js'
 import { GrantPermissions } from './panels/grant-permissions.js'
 import { evalOnPage } from './utils/eval-on-page.js'
 import { getPlatform } from './utils/get-platform.js'
-import { getBrowserTheme } from './utils/get-theme.js'
 import { sendMessage, events } from './utils/send-message.js'
 import type { ClientMessage, InspectorRPCEvents, MetricsRPC, Peer, RPCMessage, SOURCE_CLIENT } from '@ipshipyard/libp2p-inspector-metrics'
 import type { TypedEventTarget, Message } from '@libp2p/interface'
@@ -23,11 +22,7 @@ import type { RPC } from 'it-rpc'
 import type { Duplex } from 'it-stream-types'
 import type { ReactElement } from 'react'
 
-const theme = getBrowserTheme()
 const platform = getPlatform()
-
-export const SOURCE_SERVICE_WORKER = '@ipshipyard/libp2p-inspector-metrics:worker'
-export const SOURCE_CONTENT_SCRIPT = '@ipshipyard/libp2p-inspector-metrics:content'
 
 /**
  * Sent by the DevTools service worker to the DevTools panel when the inspected
@@ -93,33 +88,19 @@ interface OnlineAppState {
 
 type AppState = OfflineAppState | ErrorAppState | OnlineAppState
 
-const ErrorPanel = ({ error }: { error: Error }): ReactElement => {
-  return (
-    <>
-      <FloatingPanel>
-        <h2>Error</h2>
-        <p>An error occurred while tring to detect a libp2p node on the current page</p>
-        <pre>
-          <code>{error.stack ?? error.message}</code>
-        </pre>
-      </FloatingPanel>
-    </>
-  )
-}
-
 const MissingPanel = (): ReactElement => {
   return (
     <>
       <FloatingPanel>
         <h2>Missing</h2>
-        <p>@libp2p/devtool-metrics was not found on the on the current page</p>
+        <p>@ipshipyard/libp2p-inspector-metrics was not found on the on the current page, or there may not be a libp2p node running.</p>
         <p>Please ensure you have configured your libp2p node correctly:</p>
         <SyntaxHighlighter language="javascript" style={dark}>
-      {`import { devToolsMetrics } from '@ipshipyard/libp2p-inspector-metrics'
+      {`import { inspectorMetrics } from '@ipshipyard/libp2p-inspector-metrics'
 import { createLibp2p } from 'libp2p'
 
 const node = await createLibp2p({
-  metrics: devToolsMetrics({ /* ... */ })
+  metrics: inspectorMetrics({ /* ... */ })
   // ...other config here
 })`}
         </SyntaxHighlighter>
@@ -151,7 +132,7 @@ export interface AppProps {
   messages: Duplex<AsyncGenerator<Uint8Array>>
 }
 
-export class App extends Component<AppProps> {
+class App extends Component<AppProps> {
   state: AppState
   nodeConnected: PromiseWithResolvers<boolean>
   private readonly rpc: RPC
@@ -237,7 +218,7 @@ export class App extends Component<AppProps> {
 
   init (): void {
     Promise.resolve().then(async () => {
-      const metricsPresent = await evalOnPage<boolean>(`${LIBP2P_INSPECTOR_METRICS_KEY} === true`)
+      const metricsPresent = await evalOnPage<boolean>(`globalThis?.${LIBP2P_INSPECTOR_METRICS_KEY} === true`)
 
       if (!metricsPresent) {
         this.setState({
@@ -307,7 +288,7 @@ export class App extends Component<AppProps> {
 
     if (this.state.status === 'error') {
       return (
-        <ErrorPanel error={this.state.error} />
+        <FatalErrorPanel error={this.state.error} />
       )
     }
 
@@ -332,7 +313,7 @@ export class App extends Component<AppProps> {
 const body = document.getElementsByTagName('body')[0]
 
 if (body != null) {
-  body.className = `${body.className} ${platform} ${theme}`
+  body.className = `${body.className} ${platform}`
 }
 
 const app = document.getElementById('app')

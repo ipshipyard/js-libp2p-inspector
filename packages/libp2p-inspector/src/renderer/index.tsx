@@ -7,17 +7,17 @@ import { rpc } from 'it-rpc'
 import { Component } from 'react'
 import { createRoot } from 'react-dom/client'
 import type { InspectorRPCEvents, MetricsRPC, Peer } from '@ipshipyard/libp2p-inspector-metrics'
-import type { TypedEventTarget, Message, PeerInfo, PeerId } from '@libp2p/interface'
+import type { TypedEventTarget, Message, PeerId } from '@libp2p/interface'
 import type { RPC } from 'it-rpc'
 import type { ReactElement } from 'react'
-import { Inspector, FloatingPanel, Button } from '@ipshipyard/libp2p-inspector-ui'
+import { Inspector, FatalErrorPanel } from '@ipshipyard/libp2p-inspector-ui'
 import { ConnectPanel } from './panels/connect.js'
 import { NodePanel } from './panels/node.js'
 import { rendererIPC } from './ipc.js'
 import type { InspectorIPC, InspectTarget } from '../ipc/index.ts'
 
 const platform = 'chrome'
-const RPC_TIMEOUT = 1_000
+const RPC_TIMEOUT = 10_000
 
 interface ConnectingAppState {
   status: 'connecting'
@@ -43,32 +43,12 @@ interface OnlineAppState {
 
 type AppState = ConnectingAppState | ErrorAppState | OnlineAppState
 
-interface ErrorPanelProps {
-  error: Error
-  onBack: (evt: React.UIEvent) => void
-}
-
-const ErrorPanel = ({ error, onBack }: ErrorPanelProps): ReactElement => {
-  return (
-    <>
-      <FloatingPanel>
-        <h2>Error</h2>
-        <pre>
-          <code>{error.stack ?? error.message}</code>
-        </pre>
-        <Button onClick={onBack}>Back</Button>
-      </FloatingPanel>
-    </>
-  )
-}
-
 export interface AppProps {
 
 }
 
 export class App extends Component<AppProps> {
   state: AppState
-  nodeConnected: PromiseWithResolvers<boolean>
   private readonly rpc: RPC
   private readonly metrics: MetricsRPC
   private readonly events: TypedEventTarget<InspectorRPCEvents>
@@ -95,12 +75,7 @@ export class App extends Component<AppProps> {
     })
 
     // register for updates from main thread
-    this.ipc.onTargets((targets: PeerInfo[]) => {
-      this.setState(s => ({
-        ...s,
-        targets
-      }))
-    })
+    this.ipc.onTargets(this.onTargets)
 
     // called after connecting to a remote node
     this.ipc.onConnected(this.onConnected)
@@ -111,6 +86,7 @@ export class App extends Component<AppProps> {
       // handle incoming metrics
     })
     this.events.addEventListener('self', (evt) => {
+      console.info('self')
       this.setState(s => ({
         ...s,
         self: evt.detail
@@ -161,12 +137,28 @@ export class App extends Component<AppProps> {
       .catch(err => {
         console.error('error while reading RPC messages', err)
       })
-
-    this.nodeConnected = Promise.withResolvers()
   }
 
   copyToClipboard = (value: string): void => {
+    navigator.clipboard.writeText(value)
+      .catch(err => {
+        console.error('could not write to clipboard', err)
+      })
+  }
 
+  onTargets = (targets: InspectTarget[]) => {
+    console.info('targets')
+    this.setState(s => ({
+      ...s,
+      targets
+    }))
+
+    // if the main thread says we are connected to a peer but our state says we
+    // are not, try to init with the connected peer (this can happen after a
+    // page refresh)
+    if (targets.find(t => t.status === 'connected') != null && this.state.status !== 'connected') {
+      this.onConnected()
+    }
   }
 
   onConnect = (evt: React.UIEvent, address: string | PeerId) => {
@@ -175,8 +167,6 @@ export class App extends Component<AppProps> {
   }
 
   onConnected = (err?: Error) => {
-    console.info('connected!', err)
-
     if (err != null) {
       this.setState({
         status: 'error',
@@ -187,11 +177,7 @@ export class App extends Component<AppProps> {
     }
 
     Promise.resolve().then(async () => {
-      console.info('do init')
-
       const { self, peers, debug, capabilities } = await this.metrics.init()
-
-      console.info('did init')
 
       this.setState((s: ConnectingAppState) => {
         const target = s.targets.find(n => n.id.equals(self.id))
@@ -233,7 +219,7 @@ export class App extends Component<AppProps> {
   render (): ReactElement {
     if (this.state.status === 'error') {
       return (
-        <ErrorPanel error={this.state.error} onBack={this.onDisconnect} />
+        <FatalErrorPanel error={this.state.error} onBack={this.onDisconnect} />
       )
     }
 

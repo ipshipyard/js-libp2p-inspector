@@ -4,6 +4,6 @@ small.Error {
 }
 
 small.Success {
-  color: var(--success-text-colour);
+  color: var(--success-text-color);
   margin-top: 6px;
 }

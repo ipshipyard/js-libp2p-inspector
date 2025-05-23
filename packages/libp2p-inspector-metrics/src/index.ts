@@ -51,7 +51,7 @@ Object.defineProperty(globalThis, LIBP2P_INSPECTOR_METRICS_KEY, {
 })
 
 // don't wait for inspector RPC forever
-const RPC_TIMEOUT = 1_000
+const RPC_TIMEOUT = 10_000
 
 /**
  * Sent by the client to discover basic node info & versions

@@ -16,8 +16,8 @@
 }
 
 .Menu button.selected {
-  color: #a8c7fa;
-  border-bottom: 1px solid #a8c7fa;
+  color: var(--menu-selected-text-color);
+  border-bottom: 1px solid var(--menu-selected-border-color);
 }
 
 .Menu .Icon {

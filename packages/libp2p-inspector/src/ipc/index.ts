@@ -1,5 +1,5 @@
-import type { Multiaddr } from "@multiformats/multiaddr"
-import type { PeerId } from "@libp2p/interface"
+import type { PeerId } from '@libp2p/interface'
+import type { Multiaddr } from '@multiformats/multiaddr'
 
 /**
  * - pending - just discovered
