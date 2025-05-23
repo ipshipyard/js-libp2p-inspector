@@ -88,7 +88,7 @@ function createWindow (): void {
   mainWindow.loadFile(path.join(import.meta.dirname, '../../../index.html'))
 
   if (process.env.NODE_ENV !== 'test') {
-    mainWindow.webContents.openDevTools()
+    // mainWindow.webContents.openDevTools()
   }
 
   mainWindow.on('close', () => {
