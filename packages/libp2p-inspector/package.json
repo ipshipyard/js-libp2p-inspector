@@ -133,7 +133,7 @@
     "lint": "aegir lint",
     "build": "tsc && node esbuild.js",
     "test": "aegir test -t node",
-    "test:electron-main": "aegir test -t node",
+    "test:electron-main": "DEBUG=pw:browser aegir test -t node",
     "dep-check": "aegir dep-check",
     "start": "npm run build && electron --trace-warnings --unhandled-rejections=strict ./dist/src/main/index.js",
     "release": "aegir release"
