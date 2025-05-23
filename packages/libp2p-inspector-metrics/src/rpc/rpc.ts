@@ -27,7 +27,7 @@ function toPeerIdOrMultiaddr (peerIdOrMultiaddr: string): PeerId | Multiaddr {
 
 export function metricsRpc (components: InspectorMetricsComponents): MetricsRPC {
   const log = components.logger.forComponent('libp2p:devtools-metrics:metrics-rpc')
-  let debug = globalThis.localStorage?.getItem('debug') ?? process.env.DEBUG ?? ''
+  let debug = globalThis.localStorage?.getItem('debug') ?? globalThis.process?.env?.DEBUG ?? ''
 
   return {
     init: async () => {

@@ -13,6 +13,8 @@ describe('launch app', () => {
   beforeEach(async () => {
     electronApp = await electron.launch({
       args: [
+        // https://github.com/electron/electron/issues/42510
+        '--no-sandbox',
         './dist/src/main/index.js'
       ]
     })
