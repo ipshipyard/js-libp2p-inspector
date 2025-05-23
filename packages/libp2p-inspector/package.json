@@ -22,8 +22,10 @@
   "type": "module",
   "types": "./dist/src/index.d.ts",
   "files": [
-    "src",
+    "bin",
     "dist",
+    "src",
+    "index.html",
     "!dist/test",
     "!**/*.tsbuildinfo"
   ],

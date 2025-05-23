@@ -1,8 +1,33 @@
 {
   "name": "@ipshipyard/libp2p-devtools",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "description": "Browser DevTools plugin to inspect a libp2p node running on the current page",
+  "author": "info@ipshipyard.com",
+  "license": "Apache-2.0 OR MIT",
+  "homepage": "https://github.com/ipshipyard/js-libp2p-inspector/tree/main/packages/libp2p-inspector-metrics#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ipshipyard/js-libp2p-inspector.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ipshipyard/js-libp2p-inspector/issues"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "type": "module",
+  "types": "./dist/src/index.d.ts",
+  "files": [
+    "dist",
+    "public",
+    "src",
+    "devtools.html",
+    "devtools.js",
+    "manifest.json",
+    "!dist/test",
+    "!**/*.tsbuildinfo"
+  ],
   "scripts": {
     "clean": "aegir clean",
     "lint": "aegir lint",
@@ -11,8 +36,6 @@
     "dep-check": "aegir dep-check",
     "start:firefox": "web-ext run --source-dir . --verbose --devtools"
   },
-  "author": "info@ipshipyard.com",
-  "license": "Apache-2.0 OR MIT",
   "dependencies": {
     "@ipshipyard/libp2p-inspector-metrics": "^0.0.0",
     "@ipshipyard/libp2p-inspector-ui": "^0.0.0",
