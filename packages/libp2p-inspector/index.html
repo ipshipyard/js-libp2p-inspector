@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>libp2p inspector</title>
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self' data:; script-src 'self'"
+    />
+    <link rel="stylesheet" href="./dist/renderer.css" />
+  </head>
+  <body class="sans-serif f5">
+    <div id="app"></div>
+    <script src="./dist/renderer.js" type="module"></script>
+  </body>
+</html>

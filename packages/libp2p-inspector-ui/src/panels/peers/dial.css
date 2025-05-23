@@ -1,0 +1,32 @@
+.DialEvents {
+  margin: 5px 0;
+}
+
+.DialEvent {
+  margin: 0;
+  padding: 5px 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.DialEvent.dial-queue ol {
+  margin: 6px;
+}
+
+.DialEvent.dial-queue .calculated-address {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.DialEvent.webrtc .ice-candidate {
+  padding: 5px;
+}
+
+.DialEvents .Success {
+  background-color: var(--success-background-color);
+}
+
+.DialEvents .Error {
+  background-color: var(--warning-background-color);
+}

@@ -1,0 +1,20 @@
+{
+  "extends": "aegir/src/config/tsconfig.aegir.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "jsx": "react-jsx",
+    "emitDeclarationOnly": true
+  },
+  "include": [
+    "src",
+    "test"
+  ],
+  "references": [
+    {
+      "path": "../libp2p-inspector-metrics"
+    },
+    {
+      "path": "../libp2p-inspector-ui"
+    }
+  ]
+}

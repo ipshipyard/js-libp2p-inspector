@@ -1,0 +1,12 @@
+.Icon {
+  display: inline-block;
+}
+.Icon.ClickableIcon {
+  cursor: pointer;
+}
+.Icon.ClickableIcon:hover {
+  filter: brightness(1.4);
+}
+.Icon.ClickableIcon:active {
+  filter: brightness(0.8);
+}

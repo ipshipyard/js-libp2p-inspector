@@ -1,0 +1,15 @@
+.Footer small {
+  margin: 0;
+  text-align: right;
+  color: var(--dark-text-color);
+}
+.Footer small a, .Footer small a:link, .Footer small a:visited {
+  color: var(--dark-text-color);
+  text-decoration: none;
+}
+.Footer small a:hover {
+  color: var(--text-color);
+}
+.Footer small svg path {
+  color: var(--text-color);
+}

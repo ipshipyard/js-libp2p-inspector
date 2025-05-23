@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0" y="0" width="154" height="154" viewBox="0, 0, 154, 154">
+  <g id="Background">
+    <rect x="0" y="0" width="154" height="154" fill="#1A5E9A"/>
+  </g>
+  <g id="Layer_1">
+    <g>
+      <path d="M137.665,46 L137.665,35.814 L96.703,35.814 L86.473,35.814 L86.162,35.814 L71.59,85.331 L57.027,35.814 L46.475,35.814 L51.3,51.988 L41.451,85.331 L26.884,35.814 L16.335,35.814 L40.446,117.175 L41.451,117.175 L56.519,66.756 L71.59,117.175 L72.593,117.175 L93.237,47.512 L94.208,45.86 z" fill="#FFFFFF"/>
+      <path d="M110.094,42.668 L119.718,42.668 L119.718,118.186 L110.094,118.186 L110.094,42.668 z" fill="#FFFFFF"/>
+    </g>
+  </g>
+</svg>

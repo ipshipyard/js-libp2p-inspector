@@ -1,0 +1,70 @@
+@import url('reset.css');
+
+:root {
+  --background-color: #282828;
+  --text-color: #E3E3E3;
+  --active-text-color: #a8c7fa;
+  --dark-text-color: #8F8F8F;
+
+  --warning-text-color: #F2B8B5;
+  --dark-warning-color: #734444;
+  --dark-warning-color-hover: #854e4e;
+  --dark-warning-color-active: #714242;
+
+  --active-text-color: #a8c7fa;
+  --primary-action-text-color: #062E6F;
+  --primary-action-color: #A8C7FA;
+  --primary-action-color-hover: #A0BDED;
+  --primary-action-color-active: #839FCC;
+
+  --action-border-color: #047DB7;
+
+  --success-text-color: #6DD58C;
+  --dark-success-color: #2c5639;
+}
+
+.light {
+  --background-color: #FFF;
+  --text-color: #1f1f1f;
+  --active-text-color: #a8c7fa;
+  --dark-text-color: #8F8F8F;
+
+  --warning-text-color: #8a0000;
+  --dark-warning-color: #4a0000;
+}
+
+body {
+  font-family: Arial, Tahoma, sans-serif;
+  font-size: 14px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: 16px;
+}
+
+h1, h2, h3, h4, h5, h6, p, li, small, form {
+  display: block;
+  margin-bottom: 12px;
+}
+li {
+  margin-left: 12px;
+}
+code {
+  font-family: 'Courier New', Courier, monospace, Tahoma, sans-serif;
+}
+
+.dark {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+.dark small {
+  color: var(--dark-text-color);
+}
+
+.light {
+  background-color: var(--background-color);
+  color: #1f1f1f;
+}
+.light small {
+  color: var(--dark-text-color);
+}
