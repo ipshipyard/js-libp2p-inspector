@@ -2,7 +2,8 @@
 export default {
   dependencyCheck: {
     ignore: [
-      'esbuild'
+      'esbuild',
+      'fast-glob'
     ]
   }
 }

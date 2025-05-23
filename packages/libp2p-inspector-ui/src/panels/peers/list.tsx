@@ -51,6 +51,7 @@ function Peer ({ peer, copyToClipboard, metrics }: PeerProps): ReactElement {
     setDisconnecting(true)
     metrics.closeConnection(peer.id)
       .catch(err => {
+        // eslint-disable-next-line
         console.error('could not close connection', err)
       })
       .finally(() => {
@@ -67,12 +68,12 @@ function Peer ({ peer, copyToClipboard, metrics }: PeerProps): ReactElement {
   if (expanded) {
     return (
       <Panel>
-        <h2><img src={disclosureTriangleOpen} height={12} width={12} className={'DisclosureTriangle'} onClick={() => { setExpanded(false) }} /> {disconnectIcon} <PeerAgent peer={peer} /> <span className="PeerId">{peer.id.toString()}</span></h2>
+        <h2><img src={disclosureTriangleOpen} height={12} width={12} className='DisclosureTriangle' onClick={() => { setExpanded(false) }} /> {disconnectIcon} <PeerAgent peer={peer} /> <span className='PeerId'>{peer.id.toString()}</span></h2>
         <p>
           <PeerTags peer={peer} />
         </p>
         <h3>Multiaddrs</h3>
-        <MultiaddrList addresses={peer.addresses} includeCertification={true} copyToClipboard={copyToClipboard} />
+        <MultiaddrList addresses={peer.addresses} includeCertification copyToClipboard={copyToClipboard} />
         <PeerProtocols peer={peer} />
       </Panel>
     )
@@ -80,7 +81,7 @@ function Peer ({ peer, copyToClipboard, metrics }: PeerProps): ReactElement {
 
   return (
     <Panel>
-      <h2><img src={disclosureTriangleClosed} height={12} width={12} className={'DisclosureTriangle'} onClick={() => { setExpanded(true) }} /> {disconnectIcon} <PeerAgent peer={peer} /> <span className="PeerId">{peer.id.toString()}</span></h2>
+      <h2><img src={disclosureTriangleClosed} height={12} width={12} className='DisclosureTriangle' onClick={() => { setExpanded(true) }} /> {disconnectIcon} <PeerAgent peer={peer} /> <span className='PeerId'>{peer.id.toString()}</span></h2>
       <p>
         <PeerTags peer={peer} />
       </p>
@@ -94,7 +95,7 @@ function PeerAgent ({ peer }: Pick<PeerProps, 'peer'>): ReactElement | undefined
   }
 
   return (
-    <span className="PeerAgent">{getAgent(peer.metadata)}</span>
+    <span className='PeerAgent'>{getAgent(peer.metadata)}</span>
   )
 }
 
@@ -107,7 +108,7 @@ function PeerTags ({ peer }: Pick<PeerProps, 'peer'>): ReactElement | undefined 
 
   return (
     <>
-      {entries.map(([key, value], index) => <span key={index} className="PeerTag">{key}</span>)}
+      {entries.map(([key, value], index) => <span key={index} className='PeerTag'>{key}</span>)}
     </>
   )
 }

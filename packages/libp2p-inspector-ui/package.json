@@ -46,6 +46,7 @@
     "@multiformats/multiaddr": "^12.2.3",
     "@multiformats/multiaddr-matcher": "^1.2.1",
     "multiformats": "^13.1.0",
+    "react-icons": "^5.5.0",
     "uint8arrays": "^5.1.0"
   },
   "peerDependencies": {

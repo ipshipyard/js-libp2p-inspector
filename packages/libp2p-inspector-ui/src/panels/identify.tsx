@@ -1,11 +1,12 @@
-import type { MetricsRPC } from "@ipshipyard/libp2p-inspector-metrics"
-import { useState, type JSX } from "react"
-import { Panel } from "./panel.tsx"
-import { TextInput } from "./text-input.tsx"
-import { Button } from "./button.tsx"
 import { base58btc } from 'multiformats/bases/base58'
-import { ErrorPanel } from "./error.tsx"
-import { ConsolePanel } from "./console.tsx"
+import { useState } from 'react'
+import { Button } from './button.tsx'
+import { ConsolePanel } from './console.tsx'
+import { ErrorPanel } from './error.tsx'
+import { Panel } from './panel.tsx'
+import { TextInput } from './text-input.tsx'
+import type { MetricsRPC } from '@ipshipyard/libp2p-inspector-metrics'
+import type { JSX } from 'react'
 
 interface IdentifyPanelProps {
   component: string
@@ -52,8 +53,8 @@ export function Identify ({ component, metrics }: IdentifyPanelProps): JSX.Eleme
     <Panel>
       <p>Identify a peer</p>
       <form onSubmit={(evt) => identify(evt)}>
-        <TextInput type="text" value={peerIdOrMultiaddr} placeholder="Peer ID or Multiaddr" onChange={(e) => { setPeerIdOrMultiaddr(e.target.value) }} />
-        <Button onClick={(evt) => identify(evt)} primary={true}>Identify</Button>
+        <TextInput type='text' value={peerIdOrMultiaddr} placeholder='Peer ID or Multiaddr' onChange={(e) => { setPeerIdOrMultiaddr(e.target.value) }} />
+        <Button onClick={(evt) => identify(evt)} primary>Identify</Button>
       </form>
       {result}
     </Panel>

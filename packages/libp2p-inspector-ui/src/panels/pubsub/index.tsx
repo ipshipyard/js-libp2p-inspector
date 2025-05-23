@@ -24,6 +24,7 @@ export function PubSub ({ component, metrics, pubsub }: PubSubProps): ReactEleme
         setTopics(list)
       })
       .catch(err => {
+        // eslint-disable-next-line no-console
         console.error('could not get subs', err)
       })
   }
@@ -54,7 +55,7 @@ function SubscribePanel ({ component, subscribed, metrics }: SubscribePanelOptio
 
     metrics.pubsub.subscribe(component, topic)
       .then(() => {
-        setResult(<SmallSuccess message="Subscribed successfully" />)
+        setResult(<SmallSuccess message='Subscribed successfully' />)
         subscribed()
       }, (err) => {
         setResult(<SmallError error={err} />)
@@ -67,8 +68,8 @@ function SubscribePanel ({ component, subscribed, metrics }: SubscribePanelOptio
     <Panel>
       <p>Subscribe to a PubSub topic</p>
       <form onSubmit={(evt) => subscribe(evt, topic)}>
-        <TextInput type="text" value={topic} placeholder="Topic" onChange={(e) => { setTopic(e.target.value) }} />
-        <Button onClick={(evt) => subscribe(evt, topic)} primary={true}>Subscribe</Button>
+        <TextInput type='text' value={topic} placeholder='Topic' onChange={(e) => { setTopic(e.target.value) }} />
+        <Button onClick={(evt) => subscribe(evt, topic)} primary>Subscribe</Button>
       </form>
       {result}
     </Panel>
@@ -114,7 +115,7 @@ function TopicDisplay ({ component, topic, metrics, messages }: TopicDisplayOpti
 
     metrics.pubsub.publish(component, topic, new TextEncoder().encode(message))
       .then(() => {
-        setResult(<SmallSuccess message="Published successfully" />)
+        setResult(<SmallSuccess message='Published successfully' />)
       }, (err) => {
         setResult(<SmallError error={err} />)
       })
@@ -127,8 +128,8 @@ function TopicDisplay ({ component, topic, metrics, messages }: TopicDisplayOpti
       <Panel>
         <p>Publish a message</p>
         <form onSubmit={(evt) => publish(evt, topic)}>
-          <TextInput type="text" value={message} placeholder="Message" onChange={(e) => { setMessage(e.target.value) }} />
-          <Button onClick={(evt) => publish(evt, topic)} primary={true}>Publish</Button>
+          <TextInput type='text' value={message} placeholder='Message' onChange={(e) => { setMessage(e.target.value) }} />
+          <Button onClick={(evt) => publish(evt, topic)} primary>Publish</Button>
         </form>
         {result}
       </Panel>

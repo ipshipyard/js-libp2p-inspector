@@ -1,7 +1,8 @@
 import './grant-permissions.css'
+import type { JSX } from 'react'
 
-export function GrantPermissions () {
+export function GrantPermissions (): JSX.Element {
   return (
-    <div className="GrantPermissions" />
+    <div className='GrantPermissions' />
   )
 }

@@ -1,7 +1,6 @@
 import '@ipshipyard/libp2p-inspector-ui/index.css'
+import { LIBP2P_INSPECTOR_METRICS_KEY, valueCodecs } from '@ipshipyard/libp2p-inspector-metrics'
 import { Inspector, FloatingPanel, FatalErrorPanel } from '@ipshipyard/libp2p-inspector-ui'
-import { LIBP2P_INSPECTOR_METRICS_KEY } from '@ipshipyard/libp2p-inspector-metrics'
-import { valueCodecs } from '@ipshipyard/libp2p-inspector-metrics'
 import { TypedEventEmitter } from '@libp2p/interface'
 import { pipe } from 'it-pipe'
 import { pushable } from 'it-pushable'
@@ -95,8 +94,8 @@ const MissingPanel = (): ReactElement => {
         <h2>Missing</h2>
         <p>@ipshipyard/libp2p-inspector-metrics was not found on the on the current page, or there may not be a libp2p node running.</p>
         <p>Please ensure you have configured your libp2p node correctly:</p>
-        <SyntaxHighlighter language="javascript" style={dark}>
-      {`import { inspectorMetrics } from '@ipshipyard/libp2p-inspector-metrics'
+        <SyntaxHighlighter language='javascript' style={dark}>
+          {`import { inspectorMetrics } from '@ipshipyard/libp2p-inspector-metrics'
 import { createLibp2p } from 'libp2p'
 
 const node = await createLibp2p({
@@ -198,6 +197,7 @@ class App extends Component<AppProps> {
         )
       })
       .catch(err => {
+        // eslint-disable-next-line no-console
         console.error('error while reading RPC messages', err)
       })
 
@@ -257,8 +257,6 @@ class App extends Component<AppProps> {
       }
     })
       .catch(err => {
-        console.error('error communicating with page', err)
-
         this.setState({
           status: 'error',
           error: err

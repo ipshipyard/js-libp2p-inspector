@@ -3,6 +3,6 @@ import './grant-permissions.css'
 
 export function GrantPermissions (): JSX.Element {
   return (
-    <div className="GrantPermissions" />
+    <div className='GrantPermissions' />
   )
 }

@@ -1,6 +1,7 @@
 import { FloatingPanel } from './floating-panel.js'
+import type { JSX } from 'react'
 
-export const DetectingPanel = () => {
+export const DetectingPanel = (): JSX.Element => {
   return (
     <>
       <FloatingPanel>

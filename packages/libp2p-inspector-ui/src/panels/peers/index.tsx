@@ -17,8 +17,8 @@ export function Peers ({ peers, metrics, copyToClipboard }: PeersProps): ReactEl
   return (
     <>
       <Menu onClick={(panel) => { setPanel(panel) }} panel={panel} options={['Connected', 'Dial']} />
-      { panel === 'Connected' ? <PeerList peers={peers} metrics={metrics} copyToClipboard={copyToClipboard} /> : undefined }
-      { panel === 'Dial' ? <DialPeer metrics={metrics} /> : undefined }
+      {panel === 'Connected' ? <PeerList peers={peers} metrics={metrics} copyToClipboard={copyToClipboard} /> : undefined}
+      {panel === 'Dial' ? <DialPeer metrics={metrics} /> : undefined}
     </>
   )
 }

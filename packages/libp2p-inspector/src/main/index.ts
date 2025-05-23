@@ -1,9 +1,8 @@
 import * as path from 'path'
-import { app, BrowserWindow, ipcMain, protocol } from 'electron'
+import { app, BrowserWindow, ipcMain } from 'electron'
 import { discovery } from './discovery.js'
 import { Events } from './events.ts'
 import type { Target } from './target.ts'
-import fs from 'node:fs'
 
 let mainWindow: BrowserWindow | undefined
 
@@ -31,6 +30,8 @@ events.addEventListener('rpc', (evt) => {
 
 ipcMain.on('libp2p-inspector:connect', (_event, value) => {
   try {
+    let connected = false
+
     if (value.startsWith('/')) {
       // eslint-disable-next-line no-console
       console.log('libp2p-inspector:connect connect to multiaddr', value)
@@ -38,6 +39,7 @@ ipcMain.on('libp2p-inspector:connect', (_event, value) => {
     } else {
       for (const target of targets.values()) {
         if (target.id.equals(value)) {
+          connected = true
           target.connect()
         } else {
           target.disconnect()
@@ -45,7 +47,11 @@ ipcMain.on('libp2p-inspector:connect', (_event, value) => {
       }
     }
 
-    mainWindow?.webContents.send('libp2p-inspector:connected')
+    // do not need to call back to page as updating target status will let page
+    // know we are now connected to a node
+    if (!connected) {
+      throw new Error(`Could not connect to ${value}`)
+    }
   } catch (err) {
     mainWindow?.webContents.send('libp2p-inspector:connected', err)
   }

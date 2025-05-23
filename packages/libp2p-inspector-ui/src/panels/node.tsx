@@ -18,7 +18,7 @@ export function Node ({ self, copyToClipboard }: NodeProps): ReactElement {
   if (agent != null) {
     agentVersion = (
       <>
-        <Heading help="The agent is sent to peers during Identify">
+        <Heading help='The agent is sent to peers during Identify'>
           <h2>Agent</h2>
         </Heading>
         <p>{agent}</p>
@@ -33,19 +33,21 @@ export function Node ({ self, copyToClipboard }: NodeProps): ReactElement {
       </Heading>
       <p>{self.id.toString()}</p>
       {agentVersion}
-      <Heading help="Multiaddrs are addresses that other nodes can use to contact this node">
+      <Heading help='Multiaddrs are addresses that other nodes can use to contact this node'>
         <h2>Multiaddrs</h2>
       </Heading>
-      <MultiaddrList copyToClipboard={copyToClipboard} addresses={self.addresses.map(address => {
-        let multiaddr = address.multiaddr
+      <MultiaddrList
+        copyToClipboard={copyToClipboard} addresses={self.addresses.map(address => {
+          let multiaddr = address.multiaddr
 
-        if (multiaddr.getPeerId() == null) {
-          multiaddr = multiaddr.encapsulate(`/p2p/${self.id}`)
-        }
+          if (multiaddr.getPeerId() == null) {
+            multiaddr = multiaddr.encapsulate(`/p2p/${self.id}`)
+          }
 
-        return { multiaddr }
-      })} />
-      <Heading help="This node will respond to these protocols">
+          return { multiaddr }
+        })}
+      />
+      <Heading help='This node will respond to these protocols'>
         <h2>Supported protocols</h2>
       </Heading>
       <Protocols protocols={self.protocols} />
@@ -66,7 +68,7 @@ function Protocols ({ protocols }: ProtocolsPanelProps): ReactElement {
 
   return (
     <ul>
-    {protocols.map((protocol, index) => <li key={`protocol-${index}`}>{protocol}</li>)}
+      {protocols.map((protocol, index) => <li key={`protocol-${index}`}>{protocol}</li>)}
     </ul>
   )
 }

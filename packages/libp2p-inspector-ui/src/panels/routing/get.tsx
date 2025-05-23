@@ -71,8 +71,6 @@ export class Get extends Component<GetProps, GetState> {
 
     this.props.metrics.contentRouting.get(key, {
       onProgress: (event) => {
-        console.info('incoming on progress event', event)
-
         let message: string = event.type
 
         if (event.type === 'dial:already-connected') {
@@ -103,7 +101,7 @@ export class Get extends Component<GetProps, GetState> {
             error: '',
             details: [
               ...s.details,
-              <SmallSuccess key={`event-${s.details.length}`} message={'Get successful'} />
+              <SmallSuccess key={`event-${s.details.length}`} message='Get successful' />
             ]
           }
         })
@@ -122,17 +120,19 @@ export class Get extends Component<GetProps, GetState> {
     return false
   }
 
-  render () {
+  render (): JSX.Element {
     return (
       <Panel>
         <p>Enter a multibase encoded key to look up in the routing:</p>
         <form onSubmit={(evt) => this.get(evt, this.state.target)}>
-          <TextInput type="text" value={this.state.target} placeholder="mKey..." onChange={(e) => {
-            this.setState({
-              target: e.target.value
-            })
-          }} />
-          <Button onClick={(evt) => this.get(evt, this.state.target)} primary={true}>Get</Button>
+          <TextInput
+            type='text' value={this.state.target} placeholder='mKey...' onChange={(e) => {
+              this.setState({
+                target: e.target.value
+              })
+            }}
+          />
+          <Button onClick={(evt) => this.get(evt, this.state.target)} primary>Get</Button>
         </form>
         {this.state.error ? <SmallError error={this.state.error} /> : undefined}
         {this.state.details}

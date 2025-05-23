@@ -132,6 +132,7 @@ export class DialPeer extends Component<DialPeerProps, DialPeerState> {
         const component = type.split(':')[0]
 
         if (dialEvents[type] == null) {
+          // eslint-disable-next-line no-console
           console.warn('No dial event handler for', type)
           return
         }
@@ -152,7 +153,7 @@ export class DialPeer extends Component<DialPeerProps, DialPeerState> {
             error: '',
             details: [
               ...s.details,
-              <SmallSuccess className='DialEvent' key={`event-${s.details.length}`} message={'Dial successful'} />
+              <SmallSuccess className='DialEvent' key={`event-${s.details.length}`} message='Dial successful' />
             ]
           }
         })
@@ -176,19 +177,21 @@ export class DialPeer extends Component<DialPeerProps, DialPeerState> {
       <Panel>
         <p>Enter a Peer ID or multiaddr to dial:</p>
         <form onSubmit={(evt) => this.dial(evt, this.state.target)}>
-          <TextInput type="text" value={this.state.target} placeholder="123Foo..." onChange={(e) => {
-            this.setState({
-              target: e.target.value
-            })
-          }} />
-          <Button onClick={(evt) => this.dial(evt, this.state.target)} primary={true}>Dial</Button>
+          <TextInput
+            type='text' value={this.state.target} placeholder='123Foo...' onChange={(e) => {
+              this.setState({
+                target: e.target.value
+              })
+            }}
+          />
+          <Button onClick={(evt) => this.dial(evt, this.state.target)} primary>Dial</Button>
         </form>
         {this.state.error !== '' ? <SmallError error={this.state.error} /> : undefined}
         {this.state.details != null
           ? (
-          <div className='DialEvents'>
-            {this.state.details}
-          </div>
+            <div className='DialEvents'>
+              {this.state.details}
+            </div>
             )
           : undefined}
       </Panel>

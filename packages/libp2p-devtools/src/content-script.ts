@@ -31,12 +31,8 @@ window.addEventListener('message', (event) => {
     return
   }
 
-  try {
-    // send message to worker
-    port?.postMessage(message)
-  } catch {
-
-  }
+  // send message to worker
+  port?.postMessage(message)
 })
 
 /**

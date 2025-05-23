@@ -13,7 +13,7 @@ interface ButtonProps {
 
 export function Button ({ children, onClick, primary, secondary, danger, disabled }: ButtonProps): JSX.Element {
   return (
-    <button disabled={disabled} type="button" onClick={onClick} className={`Button ${primary === true ? 'primary' : ''} ${secondary === true ? 'secondary' : ''} ${danger === true ? 'danger' : ''}`}>
+    <button disabled={disabled} type='button' onClick={onClick} className={`Button ${primary === true ? 'primary' : ''} ${secondary === true ? 'secondary' : ''} ${danger === true ? 'danger' : ''}`}>
       {children}
     </button>
   )

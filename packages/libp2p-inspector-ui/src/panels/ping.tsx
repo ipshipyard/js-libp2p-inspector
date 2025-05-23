@@ -1,11 +1,12 @@
-import type { MetricsRPC } from "@ipshipyard/libp2p-inspector-metrics"
-import { useState, type JSX } from "react"
-import { Panel } from "./panel.tsx"
-import { TextInput } from "./text-input.tsx"
-import { Button } from "./button.tsx"
-import { ErrorPanel } from "./error.tsx"
-import { delay } from "../utils/delay.ts"
-import { ConsolePanel } from "./console.tsx"
+import { useState } from 'react'
+import { delay } from '../utils/delay.ts'
+import { Button } from './button.tsx'
+import { ConsolePanel } from './console.tsx'
+import { ErrorPanel } from './error.tsx'
+import { Panel } from './panel.tsx'
+import { TextInput } from './text-input.tsx'
+import type { MetricsRPC } from '@ipshipyard/libp2p-inspector-metrics'
+import type { JSX } from 'react'
 
 interface PingPanelProps {
   component: string
@@ -40,10 +41,12 @@ export function Ping ({ component, metrics }: PingPanelProps): JSX.Element {
 
             results.push(rtt)
 
-            setResult(<ConsolePanel>
-{formatHeader(remote)}{'\n'}
-{formatResults(results)}
-                      </ConsolePanel>)
+            setResult(
+              <ConsolePanel>
+                {formatHeader(remote)}{'\n'}
+                {formatResults(results)}
+              </ConsolePanel>
+            )
 
             await delay(1_000)
           } catch (err: any) {
@@ -53,11 +56,11 @@ export function Ping ({ component, metrics }: PingPanelProps): JSX.Element {
 
         setResult((
           <ConsolePanel>
-{formatHeader(remote)}{'\n'}
-{formatResults(results)}{'\n'}
---- {peerIdOrMultiaddr} ping statistics ---{'\n'}
-{calculateStats(results)}
-            </ConsolePanel>
+            {formatHeader(remote)}{'\n'}
+            {formatResults(results)}{'\n'}
+            --- {peerIdOrMultiaddr} ping statistics ---{'\n'}
+            {calculateStats(results)}
+          </ConsolePanel>
         ))
       })
       .catch(err => {
@@ -69,8 +72,8 @@ export function Ping ({ component, metrics }: PingPanelProps): JSX.Element {
     <Panel>
       <p>Ping a peer</p>
       <form onSubmit={(evt) => ping(evt, peerIdOrMultiaddr)}>
-        <TextInput type="text" value={peerIdOrMultiaddr} placeholder="Peer ID or Multiaddr" onChange={(e) => { setPeerIdOrMultiaddr(e.target.value) }} />
-        <Button onClick={(evt) => ping(evt, peerIdOrMultiaddr)} primary={true}>Ping</Button>
+        <TextInput type='text' value={peerIdOrMultiaddr} placeholder='Peer ID or Multiaddr' onChange={(e) => { setPeerIdOrMultiaddr(e.target.value) }} />
+        <Button onClick={(evt) => ping(evt, peerIdOrMultiaddr)} primary>Ping</Button>
       </form>
       {result}
     </Panel>

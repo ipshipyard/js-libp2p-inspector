@@ -51,8 +51,6 @@ export class Put extends Component<PutProps, PutState> {
       .then(async () => {
         await this.props.metrics.contentRouting.put(getBytes(key), getBytes(value), {
           onProgress: (event) => {
-            console.info('incoming on progress event', event)
-
             let message: string = event.type
 
             if (event.type === 'dial:already-connected') {
@@ -83,7 +81,7 @@ export class Put extends Component<PutProps, PutState> {
             error: '',
             details: [
               ...s.details,
-              <SmallSuccess key={`event-${s.details.length}`} message={'Get successful'} />
+              <SmallSuccess key={`event-${s.details.length}`} message='Get successful' />
             ]
           }
         })
@@ -102,22 +100,26 @@ export class Put extends Component<PutProps, PutState> {
     return false
   }
 
-  render () {
+  render (): JSX.Element {
     return (
       <Panel>
         <p>Enter a multibase encoded key and value store in the routing:</p>
         <form onSubmit={(evt) => this.put(evt, this.state.key, this.state.value)}>
-          <TextInput type="text" value={this.state.key} placeholder="mKey..." onChange={(e) => {
-            this.setState({
-              key: e.target.value
-            })
-          }} />
-          <TextInput type="text" value={this.state.value} placeholder="mValue..." onChange={(e) => {
-            this.setState({
-              value: e.target.value
-            })
-          }} />
-          <Button onClick={(evt) => this.put(evt, this.state.key, this.state.value)} primary={true}>Get</Button>
+          <TextInput
+            type='text' value={this.state.key} placeholder='mKey...' onChange={(e) => {
+              this.setState({
+                key: e.target.value
+              })
+            }}
+          />
+          <TextInput
+            type='text' value={this.state.value} placeholder='mValue...' onChange={(e) => {
+              this.setState({
+                value: e.target.value
+              })
+            }}
+          />
+          <Button onClick={(evt) => this.put(evt, this.state.key, this.state.value)} primary>Get</Button>
         </form>
         {this.state.error ? <SmallError error={this.state.error} /> : undefined}
         {this.state.details}

@@ -1,13 +1,15 @@
-import { Button, ErrorPanel, FloatingPanel } from '@ipshipyard/libp2p-inspector-ui'
 import type { JSX } from 'react'
 import './fatal-error.css'
+import { FloatingPanel } from './floating-panel.tsx'
+import { ErrorPanel } from './error.tsx'
+import { Button } from './button.tsx'
 
 interface FatalErrorPanelProps {
   error: Error
-  onBack?: (evt: React.UIEvent) => void
+  onBack?(evt: React.UIEvent): void
 }
 
-export function FatalErrorPanel ({ error, onBack }: FatalErrorPanelProps): JSX.Element  {
+export function FatalErrorPanel ({ error, onBack }: FatalErrorPanelProps): JSX.Element {
   return (
     <>
       <FloatingPanel className='FatalErrorPanel'>

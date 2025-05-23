@@ -1,8 +1,7 @@
 import { Button } from '@ipshipyard/libp2p-inspector-ui'
-import type { JSX } from 'react'
-import { FaPlug } from 'react-icons/fa6'
-import { FaPlugCircleExclamation } from "react-icons/fa6";
+import { FaPlug, FaPlugCircleExclamation } from 'react-icons/fa6'
 import type { InspectTarget, InspectTargetStatus } from '../../ipc/index.ts'
+import type { JSX } from 'react'
 import './node.css'
 
 export interface NodePanelProps {
@@ -10,7 +9,7 @@ export interface NodePanelProps {
   onDisconnect(evt: React.UIEvent): void
 }
 
-function getIcon (status: InspectTargetStatus) {
+function getIcon (status: InspectTargetStatus): JSX.Element {
   if (status === 'connected') {
     return <FaPlug />
   }

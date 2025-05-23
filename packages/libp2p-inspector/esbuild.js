@@ -1,6 +1,6 @@
-import * as esbuild from 'esbuild'
 import fs from 'node:fs/promises'
 import path from 'node:path'
+import * as esbuild from 'esbuild'
 import fg from 'fast-glob'
 
 await esbuild.build({

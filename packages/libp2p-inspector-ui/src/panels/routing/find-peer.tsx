@@ -69,8 +69,6 @@ export class FindPeer extends Component<FindPeerProps, FindPeerState> {
 
     this.props.metrics.peerRouting.findPeer(peerId, {
       onProgress: (event) => {
-        console.info('incoming on progress event', event)
-
         let message: string = event.type
 
         if (event.type === 'dial:already-connected') {
@@ -102,7 +100,7 @@ export class FindPeer extends Component<FindPeerProps, FindPeerState> {
             details: [
               ...s.details,
               <pre key='results'><code>{JSON.stringify(peerInfo, null, 2)}</code></pre>,
-              <SmallSuccess key={`event-${s.details.length}`} message={'Get successful'} />
+              <SmallSuccess key={`event-${s.details.length}`} message='Get successful' />
             ]
           }
         })
@@ -126,12 +124,14 @@ export class FindPeer extends Component<FindPeerProps, FindPeerState> {
       <Panel>
         <p>Enter a PeerId:</p>
         <form onSubmit={(evt) => this.findPeer(evt, this.state.target)}>
-          <TextInput type="text" value={this.state.target} placeholder="123Foo..." onChange={(e) => {
-            this.setState({
-              target: e.target.value
-            })
-          }} />
-          <Button onClick={(evt) => this.findPeer(evt, this.state.target)} primary={true}>Get</Button>
+          <TextInput
+            type='text' value={this.state.target} placeholder='123Foo...' onChange={(e) => {
+              this.setState({
+                target: e.target.value
+              })
+            }}
+          />
+          <Button onClick={(evt) => this.findPeer(evt, this.state.target)} primary>Get</Button>
         </form>
         {this.state.error != null ? <SmallError error={this.state.error} /> : undefined}
         {this.state.details}

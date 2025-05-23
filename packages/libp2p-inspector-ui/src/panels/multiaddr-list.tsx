@@ -38,7 +38,7 @@ function TransportIcon ({ multiaddr }: TransportIconProps): ReactElement {
 
   return (
     <>
-      <img src={src} height={16} width={16} className={'Icon'} />
+      <img src={src} height={16} width={16} className='Icon' />
     </>
   )
 }
@@ -50,7 +50,7 @@ export interface CertifiedIconProps {
 function CertifiedIcon ({ isCertified }: CertifiedIconProps): ReactElement {
   return (
     <>
-      <img src={isCertified === true ? certifiedMultiaddr : uncertifiedMultiaddr} height={16} width={16} className={'Icon'} />
+      <img src={isCertified === true ? certifiedMultiaddr : uncertifiedMultiaddr} height={16} width={16} className='Icon' />
     </>
   )
 }
@@ -73,7 +73,7 @@ function MultiaddrPanel ({ multiaddr: m, isCertified, includeCertification, copy
   }
 
   return (
-    <div className={'Multiaddr'}>
+    <div className='Multiaddr'>
       <TransportIcon multiaddr={ma} />
       {
         includeCertification === true ? <CertifiedIcon isCertified={isCertified} /> : undefined
@@ -101,7 +101,7 @@ export function MultiaddrList ({ addresses, includeCertification, copyToClipboar
 
   return (
     <>
-      <div className="MultiaddrList">
+      <div className='MultiaddrList'>
         <ul>
           {addresses.map(({ multiaddr: m, isCertified }, index) => <MultiaddrPanel key={`ma-${index}`} multiaddr={m} includeCertification={includeCertification} isCertified={isCertified} copyToClipboard={copyToClipboard} />)}
         </ul>

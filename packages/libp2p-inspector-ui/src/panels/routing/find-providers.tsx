@@ -71,8 +71,6 @@ export class FindProviders extends Component<FindProvidersProps, FindProvidersSt
 
     this.props.metrics.contentRouting.get(key, {
       onProgress: (event) => {
-        console.info('incoming on progress event', event)
-
         let message: string = event.type
 
         if (event.type === 'dial:already-connected') {
@@ -103,7 +101,7 @@ export class FindProviders extends Component<FindProvidersProps, FindProvidersSt
             error: '',
             details: [
               ...s.details,
-              <SmallSuccess key={`event-${s.details.length}`} message={'Get successful'} />
+              <SmallSuccess key={`event-${s.details.length}`} message='Get successful' />
             ]
           }
         })
@@ -122,17 +120,19 @@ export class FindProviders extends Component<FindProvidersProps, FindProvidersSt
     return false
   }
 
-  render () {
+  render (): JSX.Element {
     return (
       <Panel>
         <p>Enter a CID to find providers of:</p>
         <form onSubmit={(evt) => this.findProviders(evt, this.state.target)}>
-          <TextInput type="text" value={this.state.target} placeholder="bafyfoo..." onChange={(e) => {
-            this.setState({
-              target: e.target.value
-            })
-          }} />
-          <Button onClick={(evt) => this.findProviders(evt, this.state.target)} primary={true}>Get</Button>
+          <TextInput
+            type='text' value={this.state.target} placeholder='bafyfoo...' onChange={(e) => {
+              this.setState({
+                target: e.target.value
+              })
+            }}
+          />
+          <Button onClick={(evt) => this.findProviders(evt, this.state.target)} primary>Get</Button>
         </form>
         {this.state.error ? <SmallError error={this.state.error} /> : undefined}
         {this.state.details}

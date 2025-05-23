@@ -1,20 +1,20 @@
 import '@ipshipyard/libp2p-inspector-ui/index.css'
 import { valueCodecs } from '@ipshipyard/libp2p-inspector-metrics'
+import { Inspector, FatalErrorPanel } from '@ipshipyard/libp2p-inspector-ui'
 import { TypedEventEmitter } from '@libp2p/interface'
 import { pipe } from 'it-pipe'
 import { pushable } from 'it-pushable'
 import { rpc } from 'it-rpc'
 import { Component } from 'react'
 import { createRoot } from 'react-dom/client'
+import { rendererIPC } from './ipc.js'
+import { ConnectPanel } from './panels/connect.js'
+import { NodePanel } from './panels/node.js'
+import type { InspectorIPC, InspectTarget } from '../ipc/index.ts'
 import type { InspectorRPCEvents, MetricsRPC, Peer } from '@ipshipyard/libp2p-inspector-metrics'
 import type { TypedEventTarget, Message, PeerId } from '@libp2p/interface'
 import type { RPC } from 'it-rpc'
 import type { ReactElement } from 'react'
-import { Inspector, FatalErrorPanel } from '@ipshipyard/libp2p-inspector-ui'
-import { ConnectPanel } from './panels/connect.js'
-import { NodePanel } from './panels/node.js'
-import { rendererIPC } from './ipc.js'
-import type { InspectorIPC, InspectTarget } from '../ipc/index.ts'
 
 const platform = 'chrome'
 const RPC_TIMEOUT = 10_000
@@ -86,7 +86,6 @@ export class App extends Component<AppProps> {
       // handle incoming metrics
     })
     this.events.addEventListener('self', (evt) => {
-      console.info('self')
       this.setState(s => ({
         ...s,
         self: evt.detail
@@ -135,6 +134,7 @@ export class App extends Component<AppProps> {
         )
       })
       .catch(err => {
+        // eslint-disable-next-line no-console
         console.error('error while reading RPC messages', err)
       })
   }
@@ -142,12 +142,12 @@ export class App extends Component<AppProps> {
   copyToClipboard = (value: string): void => {
     navigator.clipboard.writeText(value)
       .catch(err => {
+        // eslint-disable-next-line no-console
         console.error('could not write to clipboard', err)
       })
   }
 
-  onTargets = (targets: InspectTarget[]) => {
-    console.info('targets')
+  onTargets = (targets: InspectTarget[]): void => {
     this.setState(s => ({
       ...s,
       targets
@@ -161,12 +161,12 @@ export class App extends Component<AppProps> {
     }
   }
 
-  onConnect = (evt: React.UIEvent, address: string | PeerId) => {
+  handleConnect = (evt: React.UIEvent, address: string | PeerId): void => {
     evt.preventDefault()
     this.ipc.connect(address)
   }
 
-  onConnected = (err?: Error) => {
+  onConnected = (err?: Error): void => {
     if (err != null) {
       this.setState({
         status: 'error',
@@ -202,12 +202,12 @@ export class App extends Component<AppProps> {
       })
   }
 
-  onCancelConnect = (evt: React.UIEvent) => {
+  onCancelConnect = (evt: React.UIEvent): void => {
     evt.preventDefault()
     this.ipc.cancelConnect()
   }
 
-  onDisconnect = (evt: React.UIEvent) => {
+  handleDisconnect = (evt: React.UIEvent): void => {
     evt.preventDefault()
     this.ipc.disconnect()
     this.setState(s => ({
@@ -219,21 +219,21 @@ export class App extends Component<AppProps> {
   render (): ReactElement {
     if (this.state.status === 'error') {
       return (
-        <FatalErrorPanel error={this.state.error} onBack={this.onDisconnect} />
+        <FatalErrorPanel error={this.state.error} onBack={this.handleDisconnect} />
       )
     }
 
     if (this.state.status === 'connected') {
       return (
         <>
-          <NodePanel {...this.state} onDisconnect={this.onDisconnect} />
+          <NodePanel {...this.state} onDisconnect={this.handleDisconnect} />
           <Inspector {...this.state} metrics={this.metrics} copyToClipboard={this.copyToClipboard} />
         </>
       )
     }
 
     return (
-      <ConnectPanel {...this.state} onConnect={this.onConnect} />
+      <ConnectPanel {...this.state} onConnect={this.handleConnect} />
     )
   }
 }

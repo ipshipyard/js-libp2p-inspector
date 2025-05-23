@@ -1,5 +1,5 @@
-import type { JSX } from "react"
-import { Panel } from "./panel.tsx"
+import { Panel } from './panel.tsx'
+import type { JSX } from 'react'
 import './error.css'
 
 interface ErrorPanelProps {

@@ -1,16 +1,16 @@
 import { useState } from 'react'
 import libp2pLogo from '../../public/img/libp2p.svg'
 import { Debug } from './debug.js'
+import { Identify } from './identify.tsx'
 import { Menu } from './menu.js'
 import { Node } from './node.js'
 import { Peers } from './peers/index.js'
+import { Ping } from './ping.tsx'
 import { PubSub } from './pubsub/index.js'
 import { Routing } from './routing/index.js'
 import type { MetricsRPC, Peer } from '@ipshipyard/libp2p-inspector-metrics'
 import type { Message } from '@libp2p/interface'
 import type { ReactElement } from 'react'
-import { Ping } from './ping.tsx'
-import { Identify } from './identify.tsx'
 
 export interface InspectorProps {
   self: Peer
@@ -27,7 +27,7 @@ export function Inspector ({ self, copyToClipboard, peers, debug, metrics, capab
   const [panel, setPanel] = useState(panels[0])
 
   const logo = (
-    <img src={libp2pLogo} height={24} width={24} className={'Icon'} />
+    <img src={libp2pLogo} height={24} width={24} className='Icon' />
   )
 
   const tabs = [{
@@ -80,6 +80,8 @@ export function Inspector ({ self, copyToClipboard, peers, debug, metrics, capab
           if (panel === tab.name) {
             return tab.panel(tab.name, tab.component)
           }
+
+          return ''
         })
       }
     </>
