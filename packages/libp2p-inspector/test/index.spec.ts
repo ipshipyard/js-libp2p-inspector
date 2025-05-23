@@ -13,7 +13,7 @@ describe('launch app', () => {
   beforeEach(async () => {
     electronApp = await electron.launch({
       args: [
-        './dist/main/index.js'
+        './dist/src/main/index.js'
       ]
     })
     libp2p = await getLibp2p({
