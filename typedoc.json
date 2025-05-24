@@ -2,6 +2,10 @@
   "$schema": "https://typedoc.org/schema.json",
   "name": "@ipshipyard/libp2p-inspector",
   "readme": "./README.md",
+  "headings": {
+    "readme": false,
+    "document": false
+  },
   "hideGenerator": true,
-  "customFooterHtml": "With ❤️ from <a href='https://ipshipyard.com/' target='_blank' rel='noreferrer'>IP Shipyard</a>"
+  "customFooterHtml": "With ❤️ from <a href='https://ipshipyard.com/' target='_blank' rel='noreferrer'>Shipyard</a>"
 }
