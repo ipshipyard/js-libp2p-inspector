@@ -8,7 +8,7 @@
 A web based inspector for libp2p nodes that runs in [browser devtools](https://github.com/ipshipyard/js-libp2p-inspector/tree/main/packages/libp2p-devtools) or as a
 standalone [Electron app](https://github.com/ipshipyard/js-libp2p-inspector/tree/main/packages/libp2p-inspector).
 
-![libp2p-inspector running in Electron](https://github.com/ipshipyard/js-libp2p-inspector/blob/main/assets/electron.png)
+![libp2p-inspector running in Electron](https://github.com/ipshipyard/js-libp2p-inspector/blob/main/assets/electron.png?raw=true)
 
 # Packages
 

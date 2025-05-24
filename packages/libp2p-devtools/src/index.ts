@@ -5,7 +5,7 @@
  *
  * Works with [@ipshipyard/libp2p-inspector-metrics](https://www.npmjs.com/package/@ipshipyard/libp2p-inspector-metrics) which supplies metrics and allows us to interact with the running node.
  *
- * <img width="840" alt="image" src="https://github.com/ipfs-shipyard/js-libp2p-devtools/assets/665810/f8f6a7c8-377f-41d6-948f-95d8469f58b8">
+ * ![libp2p-inspector running in DevTools](https://github.com/ipshipyard/js-libp2p-inspector/blob/main/assets/devtools.png?raw=true)
  *
  * ## Installation instructions
  *
@@ -41,13 +41,13 @@
  *
  * Please click the extensions button, then grant the extension permission to run:
  *
- * <img src="public/img/grant-permissions-light-chrome.png" width="700"/>
+ * ![The Chrome plugin permissions dialogue](https://github.com/ipshipyard/js-libp2p-inspector/blob/main/packages/libp2p-devtools/public/img/grant-permissions-light-chrome.png?raw=true)
  *
  * #### Firefox
  *
  * Please click the extensions button, then grant the extension permission to run:
  *
- * <img src="public/img/grant-permissions-light-firefox.png" width="700"/>
+ * ![The Firefox plugin permissions dialogue](https://github.com/ipshipyard/js-libp2p-inspector/blob/main/packages/libp2p-devtools/public/img/grant-permissions-light-firefox.png?raw=true)
  *
  * ### 4. Go!
  *

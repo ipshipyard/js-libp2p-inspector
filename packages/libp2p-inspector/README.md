@@ -25,7 +25,7 @@ repo and examine the changes made.
 An electron app that bundles @ipshipyard/libp2p-inspector-ui for use with
 libp2p nodes running under Node.js or (eventually) in browsers.
 
-![libp2p-inspector running in Electron](https://github.com/ipshipyard/js-libp2p-inspector/blob/main/assets/electron.png)
+![libp2p-inspector running in Electron](https://github.com/ipshipyard/js-libp2p-inspector/blob/main/assets/electron.png?raw=true)
 
 ## Installation instructions
 
@@ -43,7 +43,7 @@ const node = await createLibp2p({
 })
 ```
 
-### 2. Install the inspector
+### 2. Install the inspector
 
 ```console
 $ npm i -g @ipshipyard/libp2p-inspector
