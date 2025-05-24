@@ -101,12 +101,6 @@ Browse to your webapp and open the DevTools, you should see a "libp2p" tab towar
 
 6. ??? more features here
 
-# Install
-
-```console
-$ npm i @ipshipyard/libp2p-devtools
-```
-
 # License
 
 Licensed under either of

@@ -1,9 +1,14 @@
-# js-libp2p-inspector-monorepo
+# js-libp2p-inspector
 
 [![codecov](https://img.shields.io/codecov/c/github/ipshipyard/js-libp2p-inspector.svg?style=flat-square)](https://codecov.io/gh/ipshipyard/js-libp2p-inspector)
 [![CI](https://img.shields.io/github/actions/workflow/status/ipshipyard/js-libp2p-inspector/js-test-and-release.yml?branch=main\&style=flat-square)](https://github.com/ipshipyard/js-libp2p-inspector/actions/workflows/js-test-and-release.yml?query=branch%3Amain)
 
 > Inspect a running libp2p node
+
+A web based inspector for libp2p nodes that runs in [browser devtools](https://github.com/ipshipyard/js-libp2p-inspector/tree/main/packages/libp2p-devtools) or as a
+standalone [Electron app](https://github.com/ipshipyard/js-libp2p-inspector/tree/main/packages/libp2p-inspector).
+
+![libp2p-inspector running in Electron](https://github.com/ipshipyard/js-libp2p-inspector/blob/main/assets/electron.png)
 
 # Packages
 
