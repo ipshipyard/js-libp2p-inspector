@@ -1,3 +1,9 @@
+## [@ipshipyard/libp2p-inspector-metrics-v1.0.1](https://github.com/ipshipyard/js-libp2p-inspector/compare/@ipshipyard/libp2p-inspector-metrics-1.0.0...@ipshipyard/libp2p-inspector-metrics-1.0.1) (2025-05-24)
+
+### Documentation
+
+* update generated doc config ([fddaa87](https://github.com/ipshipyard/js-libp2p-inspector/commit/fddaa87f25c70e39a993b766bc2a3ceacad120b8))
+
 ## @ipshipyard/libp2p-inspector-metrics-v1.0.0 (2025-05-23)
 
 ### Features

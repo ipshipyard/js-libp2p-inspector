@@ -1,6 +1,6 @@
 {
   "name": "@ipshipyard/libp2p-inspector-metrics",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Collect libp2p metrics and send them to browser DevTools",
   "author": "info@ipshipyard.com",
   "license": "Apache-2.0 OR MIT",
