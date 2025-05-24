@@ -1,3 +1,9 @@
+## [@ipshipyard/libp2p-devtools-v1.0.1](https://github.com/ipshipyard/js-libp2p-inspector/compare/@ipshipyard/libp2p-devtools-1.0.0...@ipshipyard/libp2p-devtools-1.0.1) (2025-05-24)
+
+### Documentation
+
+* update readmes ([aae8b9f](https://github.com/ipshipyard/js-libp2p-inspector/commit/aae8b9f578468a430a27294d3fa6e51dcab4e8e9))
+
 ## @ipshipyard/libp2p-devtools-v1.0.0 (2025-05-23)
 
 ### Features
