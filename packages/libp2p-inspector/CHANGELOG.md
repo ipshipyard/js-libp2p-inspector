@@ -1,3 +1,9 @@
+## [@ipshipyard/libp2p-inspector-v1.0.3](https://github.com/ipshipyard/js-libp2p-inspector/compare/@ipshipyard/libp2p-inspector-1.0.2...@ipshipyard/libp2p-inspector-1.0.3) (2025-05-24)
+
+### Documentation
+
+* update generated doc config ([fddaa87](https://github.com/ipshipyard/js-libp2p-inspector/commit/fddaa87f25c70e39a993b766bc2a3ceacad120b8))
+
 ## [@ipshipyard/libp2p-inspector-v1.0.2](https://github.com/ipshipyard/js-libp2p-inspector/compare/@ipshipyard/libp2p-inspector-1.0.1...@ipshipyard/libp2p-inspector-1.0.2) (2025-05-24)
 
 ### Documentation
