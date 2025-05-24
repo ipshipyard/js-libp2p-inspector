@@ -1,6 +1,6 @@
 {
   "name": "@ipshipyard/libp2p-inspector-ui",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "The user interface for inspecting a libp2p node",
   "author": "info@ipshipyard.com",
   "license": "Apache-2.0 OR MIT",
