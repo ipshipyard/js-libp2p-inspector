@@ -1,6 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import libp2pLogo from '../../public/img/libp2p.svg'
+import { ConnectingPanel } from './connecting.tsx'
 import { Debug } from './debug.js'
+import { FatalErrorPanel } from './fatal-error.tsx'
 import { Identify } from './identify.tsx'
 import { Menu } from './menu.js'
 import { Node } from './node.js'
@@ -8,23 +10,97 @@ import { Peers } from './peers/index.js'
 import { Ping } from './ping.tsx'
 import { PubSub } from './pubsub/index.js'
 import { Routing } from './routing/index.js'
-import type { MetricsRPC, Peer } from '@ipshipyard/libp2p-inspector-metrics'
-import type { Message } from '@libp2p/interface'
+import type { InspectorRPCEvents, MetricsRPC, Peer, PeerAddress } from '@ipshipyard/libp2p-inspector-metrics'
+import type { PeerId, TypedEventTarget } from '@libp2p/interface'
 import type { ReactElement } from 'react'
 
 export interface InspectorProps {
-  self: Peer
-  copyToClipboard(value: string): void
-  peers: Peer[]
-  debug: string
   metrics: MetricsRPC
-  capabilities: Record<string, string[]>
-  pubsub: Record<string, Message[]>
+  events: TypedEventTarget<InspectorRPCEvents>
 }
 
-export function Inspector ({ self, copyToClipboard, peers, debug, metrics, capabilities, pubsub }: InspectorProps): ReactElement {
+export function Inspector ({ metrics, events }: InspectorProps): ReactElement {
   const panels = ['Node', 'Peers', 'Debug', 'Routing']
+
+  const [id, setId] = useState<PeerId>()
+  const [addresses, setAddresses] = useState<PeerAddress[]>([])
+  const [protocols, setProtocols] = useState<string[]>([])
+  const [metadata, setMetadata] = useState<Record<string, string>>({})
+  const [peers, setPeers] = useState<Peer[]>([])
+  const [debug, setDebug] = useState('')
+  const [capabilities, setCapabilities] = useState<Record<string, string[]>>({})
+  const [error, setError] = useState<Error>()
   const [panel, setPanel] = useState(panels[0])
+
+  useEffect(() => {
+    Promise.resolve()
+      .then(async () => {
+        const { self, peers, debug, capabilities } = await metrics.init({
+          signal: AbortSignal.timeout(1_000)
+        })
+
+        setId(self.id)
+        setAddresses(self.addresses)
+        setProtocols(self.protocols)
+        setMetadata(self.metadata)
+        setPeers(peers)
+        setDebug(debug)
+        setCapabilities(capabilities)
+      })
+      .catch(err => {
+        setError(err)
+      })
+
+    function onMetrics (evt: CustomEvent<Record<string, any>>): void {
+
+    }
+
+    function onSelf (evt: CustomEvent<Peer>): void {
+      if (!evt.detail.id.equals(id)) {
+        setId(evt.detail.id)
+      }
+
+      if (JSON.stringify(evt.detail.addresses) !== JSON.stringify(addresses)) {
+        setAddresses(evt.detail.addresses)
+      }
+
+      if (JSON.stringify(evt.detail.protocols) !== JSON.stringify(protocols)) {
+        setProtocols(evt.detail.protocols)
+      }
+
+      if (JSON.stringify(evt.detail.metadata) !== JSON.stringify(metadata)) {
+        setMetadata(evt.detail.metadata)
+      }
+    }
+
+    function onPeers (evt: CustomEvent<Peer[]>): void {
+      if (JSON.stringify(evt.detail) !== JSON.stringify(peers)) {
+        setPeers(evt.detail)
+      }
+    }
+
+    events.addEventListener('metrics', onMetrics)
+    events.addEventListener('self', onSelf)
+    events.addEventListener('peers', onPeers)
+
+    return () => {
+      events.removeEventListener('metrics', onMetrics)
+      events.removeEventListener('self', onSelf)
+      events.removeEventListener('peers', onPeers)
+    }
+  }, [])
+
+  if (error != null) {
+    return (
+      <FatalErrorPanel error={error} />
+    )
+  }
+
+  if (id == null) {
+    return (
+      <ConnectingPanel />
+    )
+  }
 
   const logo = (
     <img src={libp2pLogo} height={24} width={24} className='Icon' />
@@ -32,10 +108,10 @@ export function Inspector ({ self, copyToClipboard, peers, debug, metrics, capab
 
   const tabs = [{
     name: 'Node',
-    panel: (index: string) => <Node self={self} copyToClipboard={copyToClipboard} key={`panel-${index}`} />
+    panel: (index: string) => <Node id={id} addresses={addresses} protocols={protocols} metadata={metadata} key={`panel-${index}`} />
   }, {
     name: 'Peers',
-    panel: (index: string) => <Peers peers={peers} metrics={metrics} copyToClipboard={copyToClipboard} key={`panel-${index}`} />
+    panel: (index: string) => <Peers peers={peers} metrics={metrics} key={`panel-${index}`} />
   }, {
     name: 'Debug',
     panel: (index: string) => <Debug metrics={metrics} debug={debug} key={`panel-${index}`} />
@@ -56,7 +132,7 @@ export function Inspector ({ self, copyToClipboard, peers, debug, metrics, capab
     capability: '@libp2p/pubsub',
     name: 'PubSub',
     component: '',
-    panel: (index: string, component?: string) => <PubSub component={component ?? ''} metrics={metrics} pubsub={pubsub} key={`panel-${index}`} />
+    panel: (index: string, component?: string) => <PubSub component={component ?? ''} metrics={metrics} key={`panel-${index}`} />
   }]
 
   for (const tab of tabs) {

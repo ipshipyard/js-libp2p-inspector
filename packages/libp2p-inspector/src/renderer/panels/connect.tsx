@@ -7,6 +7,7 @@ import type { JSX } from 'react'
 export interface ConnectingPanelProps {
   targets: InspectTarget[]
   onConnect(evt: React.UIEvent, peer: string | PeerId): void
+  onCancelConnect(evt: React.UIEvent): void
 }
 
 export const ConnectPanel = ({ targets, onConnect }: ConnectingPanelProps): JSX.Element => {

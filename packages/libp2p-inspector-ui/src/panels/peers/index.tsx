@@ -8,16 +8,15 @@ import type { ReactElement } from 'react'
 export interface PeersProps {
   peers: Peer[]
   metrics: MetricsRPC
-  copyToClipboard(value: string): void
 }
 
-export function Peers ({ peers, metrics, copyToClipboard }: PeersProps): ReactElement {
+export function Peers ({ peers, metrics }: PeersProps): ReactElement {
   const [panel, setPanel] = useState('Connected')
 
   return (
     <>
       <Menu onClick={(panel) => { setPanel(panel) }} panel={panel} options={['Connected', 'Dial']} />
-      {panel === 'Connected' ? <PeerList peers={peers} metrics={metrics} copyToClipboard={copyToClipboard} /> : undefined}
+      {panel === 'Connected' ? <PeerList peers={peers} metrics={metrics} /> : undefined}
       {panel === 'Dial' ? <DialPeer metrics={metrics} /> : undefined}
     </>
   )

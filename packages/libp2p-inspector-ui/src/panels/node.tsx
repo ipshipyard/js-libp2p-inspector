@@ -3,16 +3,19 @@ import { getAgent } from '../utils/get-agent.js'
 import { Heading } from './heading.js'
 import { MultiaddrList } from './multiaddr-list.js'
 import { Panel } from './panel.js'
-import type { Peer } from '@ipshipyard/libp2p-inspector-metrics'
+import type { PeerAddress } from '@ipshipyard/libp2p-inspector-metrics'
+import type { PeerId } from '@libp2p/interface'
 import type { ReactElement } from 'react'
 
 export interface NodeProps {
-  self: Peer
-  copyToClipboard(value: string): void
+  id: PeerId
+  addresses: PeerAddress[]
+  protocols: string[]
+  metadata: Record<string, string>
 }
 
-export function Node ({ self, copyToClipboard }: NodeProps): ReactElement {
-  const agent = getAgent(self.metadata)
+export function Node ({ id, addresses, protocols, metadata }: NodeProps): ReactElement {
+  const agent = getAgent(metadata)
   let agentVersion
 
   if (agent != null) {
@@ -31,17 +34,17 @@ export function Node ({ self, copyToClipboard }: NodeProps): ReactElement {
       <Heading help="A PeerId is derived from a node's cryptographic key and uniquely identifies it on the network">
         <h2>PeerId</h2>
       </Heading>
-      <p>{self.id.toString()}</p>
+      <p>{id.toString()}</p>
       {agentVersion}
       <Heading help='Multiaddrs are addresses that other nodes can use to contact this node'>
         <h2>Multiaddrs</h2>
       </Heading>
       <MultiaddrList
-        copyToClipboard={copyToClipboard} addresses={self.addresses.map(address => {
+        addresses={addresses.map(address => {
           let multiaddr = address.multiaddr
 
           if (multiaddr.getPeerId() == null) {
-            multiaddr = multiaddr.encapsulate(`/p2p/${self.id}`)
+            multiaddr = multiaddr.encapsulate(`/p2p/${id}`)
           }
 
           return { multiaddr }
@@ -50,7 +53,7 @@ export function Node ({ self, copyToClipboard }: NodeProps): ReactElement {
       <Heading help='This node will respond to these protocols'>
         <h2>Supported protocols</h2>
       </Heading>
-      <Protocols protocols={self.protocols} />
+      <Protocols protocols={protocols} />
     </Panel>
   )
 }

@@ -1,27 +1,31 @@
 import '@ipshipyard/libp2p-inspector-ui/index.css'
 import { LIBP2P_INSPECTOR_METRICS_KEY, valueCodecs } from '@ipshipyard/libp2p-inspector-metrics'
-import { Inspector, FloatingPanel, FatalErrorPanel } from '@ipshipyard/libp2p-inspector-ui'
+import { Inspector, FloatingPanel, FatalErrorPanel, HandleCopyToClipboardContext, ConnectingPanel } from '@ipshipyard/libp2p-inspector-ui'
 import { TypedEventEmitter } from '@libp2p/interface'
 import { pipe } from 'it-pipe'
 import { pushable } from 'it-pushable'
 import { rpc } from 'it-rpc'
 import { base64 } from 'multiformats/bases/base64'
-import { Component } from 'react'
+import { useEffect, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import SyntaxHighlighter from 'react-syntax-highlighter'
 import { dark } from 'react-syntax-highlighter/dist/esm/styles/hljs'
-import { DetectingPanel } from './panels/detecting.js'
 import { GrantPermissions } from './panels/grant-permissions.js'
 import { evalOnPage } from './utils/eval-on-page.js'
 import { getPlatform } from './utils/get-platform.js'
-import { sendMessage, events } from './utils/send-message.js'
-import type { ClientMessage, InspectorRPCEvents, MetricsRPC, Peer, RPCMessage, SOURCE_CLIENT } from '@ipshipyard/libp2p-inspector-metrics'
-import type { TypedEventTarget, Message } from '@libp2p/interface'
-import type { RPC } from 'it-rpc'
+import { devToolEvents, sendMessage } from './utils/send-message.js'
+import type { ClientMessage, InspectorRPCEvents, MetricsRPC, RPCMessage, SOURCE_CLIENT } from '@ipshipyard/libp2p-inspector-metrics'
+import type { TypedEventTarget } from '@libp2p/interface'
 import type { Duplex } from 'it-stream-types'
 import type { ReactElement } from 'react'
 
 const platform = getPlatform()
+const RPC_TIMEOUT = 10_000
+
+export interface InspectorEvents extends InspectorRPCEvents {
+  'permissions-error': CustomEvent<PermissionsErrorMessage>
+  'copy-to-clipboard': CustomEvent<CopyToClipboardMessage>
+}
 
 /**
  * Sent by the DevTools service worker to the DevTools panel when the inspected
@@ -67,26 +71,6 @@ export type WorkerMessage = PageLoadedMessage | PermissionsErrorMessage
  */
 export type DevToolsMessage = CopyToClipboardMessage | ClientMessage & { tabId: number }
 
-interface OfflineAppState {
-  status: 'init' | 'missing' | 'permissions'
-}
-
-interface ErrorAppState {
-  status: 'error'
-  error: Error
-}
-
-interface OnlineAppState {
-  status: 'online'
-  self: Peer
-  peers: Peer[]
-  debug: string
-  capabilities: Record<string, string[]>
-  pubsub: Record<string, Message[]>
-}
-
-type AppState = OfflineAppState | ErrorAppState | OnlineAppState
-
 const MissingPanel = (): ReactElement => {
   return (
     <>
@@ -129,183 +113,135 @@ const GrantPermissionsPanel = (): ReactElement => {
 
 export interface AppProps {
   messages: Duplex<AsyncGenerator<Uint8Array>>
+  metrics: MetricsRPC
+  events: TypedEventTarget<InspectorEvents>
 }
 
-class App extends Component<AppProps> {
-  state: AppState
-  nodeConnected: PromiseWithResolvers<boolean>
-  private readonly rpc: RPC
-  private readonly metrics: MetricsRPC
-  private readonly events: TypedEventTarget<InspectorRPCEvents>
+function App ({ metrics, events }: AppProps): ReactElement {
+  const [status, setStatus] = useState('init')
+  const [error, setError] = useState<Error>()
 
-  constructor (props: AppProps) {
-    super(props)
+  useEffect(() => {
+    function onPageLoaded (): void {
+      setStatus('init')
 
-    this.state = {
-      status: 'init'
-    }
+      Promise.resolve()
+        .then(async () => {
+          const metricsPresent = await evalOnPage<boolean>(`globalThis?.${LIBP2P_INSPECTOR_METRICS_KEY} === true`)
 
-    this.rpc = rpc({
-      valueCodecs
-    })
+          if (!metricsPresent) {
+            setStatus('missing')
+            return
+          }
 
-    // remote metrics instance
-    this.metrics = this.rpc.createClient<MetricsRPC>('metrics')
-
-    // create event emitter to receive events from inspector-metrics
-    this.events = new TypedEventEmitter<InspectorRPCEvents>()
-    this.events.addEventListener('metrics', (evt) => {
-      // handle incoming metrics
-
-    })
-    this.events.addEventListener('self', (evt) => {
-      this.setState(s => ({
-        ...s,
-        self: evt.detail
-      }))
-    })
-    this.events.addEventListener('peers', (evt) => {
-      this.setState(s => ({
-        ...s,
-        peers: evt.detail
-      }))
-    })
-    this.events.addEventListener('pubsub:message', (evt) => {
-      this.setState(s => ({
-        ...s,
-        pubsub: {
-          // @ts-expect-error fixme
-          ...(s.pubsub ?? {}),
-          [evt.detail.topic ?? '']: [
-            // @ts-expect-error fixme
-            ...(s.pubsub[evt.detail.topic] ?? []),
-            evt.detail
-          ]
-        }
-      }))
-    })
-
-    this.rpc.createTarget('inspector', this.events)
-
-    // send RPC messages
-    Promise.resolve()
-      .then(async () => {
-        await pipe(
-          props.messages,
-          this.rpc,
-          props.messages
-        )
-      })
-      .catch(err => {
-        // eslint-disable-next-line no-console
-        console.error('error while reading RPC messages', err)
-      })
-
-    this.nodeConnected = Promise.withResolvers()
-
-    // the inspected page was reloaded while the dev tools panel is open
-    events.addEventListener('page-loaded', () => {
-      this.nodeConnected.reject(new Error('Page reloaded'))
-      this.nodeConnected = Promise.withResolvers()
-      this.setState({
-        status: 'init'
-      })
-      this.init()
-    })
-
-    this.init()
-  }
-
-  init (): void {
-    Promise.resolve().then(async () => {
-      const metricsPresent = await evalOnPage<boolean>(`globalThis?.${LIBP2P_INSPECTOR_METRICS_KEY} === true`)
-
-      if (!metricsPresent) {
-        this.setState({
-          status: 'missing'
+          setStatus('online')
         })
-        return
-      }
-
-      const signal = AbortSignal.timeout(2_000)
-
-      try {
-        const { self, peers, debug, capabilities } = await this.metrics.init({
-          signal
+        .catch(err => {
+          setStatus('error')
+          setError(err)
         })
-
-        this.setState({
-          status: 'online',
-          self,
-          peers,
-          debug,
-          capabilities,
-          pubsub: {}
-        })
-      } catch (err: any) {
-        if (signal.aborted) {
-          this.setState({
-            status: 'permissions'
-          })
-          return
-        }
-
-        this.setState({
-          status: 'error',
-          error: err
-        })
-      }
-    })
-      .catch(err => {
-        this.setState({
-          status: 'error',
-          error: err
-        })
-      })
-  }
-
-  copyToClipboard = (value: string): void => {
-    sendMessage<CopyToClipboardMessage>({
-      type: 'copy-to-clipboard',
-      value
-    })
-  }
-
-  render (): ReactElement {
-    if (this.state.status === 'init') {
-      return (
-        <DetectingPanel />
-      )
     }
 
-    if (this.state.status === 'missing') {
-      return (
-        <MissingPanel />
-      )
-    }
+    devToolEvents.addEventListener('page-loaded', onPageLoaded)
 
-    if (this.state.status === 'error') {
-      return (
-        <FatalErrorPanel error={this.state.error} />
-      )
-    }
+    onPageLoaded()
 
-    if (this.state.status === 'permissions') {
-      return (
-        <GrantPermissionsPanel />
-      )
+    return () => {
+      devToolEvents.removeEventListener('page-loaded', onPageLoaded)
     }
+  }, [])
 
-    if (this.state.status === 'online') {
-      return (
-        <Inspector {...this.state} metrics={this.metrics} copyToClipboard={this.copyToClipboard} />
-      )
-    }
-
+  if (error != null) {
     return (
-      <p>{this.state.status}</p>
+      <FatalErrorPanel error={error} />
     )
   }
+
+  if (status === 'init') {
+    return (
+      <ConnectingPanel />
+    )
+  }
+
+  if (status === 'missing') {
+    return (
+      <MissingPanel />
+    )
+  }
+
+  if (status === 'permissions') {
+    return (
+      <GrantPermissionsPanel />
+    )
+  }
+
+  if (status === 'online') {
+    return (
+      <Inspector
+        metrics={metrics}
+        events={events}
+      />
+    )
+  }
+
+  return (
+    <p>{status}</p>
+  )
+}
+
+// create RPC instance
+const r = rpc({
+  valueCodecs
+})
+
+// create RPC client to send invocations to inspector-metrics
+const metrics = r.createClient<MetricsRPC>('metrics', {
+  timeout: RPC_TIMEOUT
+})
+
+// create event emitter to receive events from inspector-metrics
+const events = new TypedEventEmitter()
+
+r.createTarget('inspector', events)
+
+// receive RPC messages
+const source = pushable<Uint8Array>()
+devToolEvents.addEventListener('libp2p-rpc', (event) => {
+  source.push(base64.decode(event.detail.message))
+})
+
+const messages: Duplex<AsyncGenerator<Uint8Array>> = {
+  source,
+  async sink (source) {
+    for await (const buf of source) {
+      // send RPC messages
+      sendMessage<RPCMessage>({
+        type: 'libp2p-rpc',
+        message: base64.encode(buf)
+      })
+    }
+  }
+}
+
+// send RPC messages
+Promise.resolve()
+  .then(async () => {
+    await pipe(
+      messages,
+      r,
+      messages
+    )
+  })
+  .catch(err => {
+    // eslint-disable-next-line no-console
+    console.error('error while reading RPC messages', err)
+  })
+
+function handleCopyToClipboard (value: string): void {
+  sendMessage<CopyToClipboardMessage>({
+    type: 'copy-to-clipboard',
+    value
+  })
 }
 
 const body = document.getElementsByTagName('body')[0]
@@ -317,26 +253,12 @@ if (body != null) {
 const app = document.getElementById('app')
 
 if (app != null) {
-  const source = pushable<Uint8Array>()
-
-  // receive RPC messages
-  events.addEventListener('libp2p-rpc', (event) => {
-    source.push(base64.decode(event.detail.message))
-  })
-
-  const messages: Duplex<AsyncGenerator<Uint8Array>> = {
-    source,
-    async sink (source) {
-      for await (const buf of source) {
-        // send RPC messages
-        sendMessage<RPCMessage>({
-          type: 'libp2p-rpc',
-          message: base64.encode(buf)
-        })
-      }
-    }
-  }
-
   const root = createRoot(app)
-  root.render(<App messages={messages} />)
+  root.render(
+    <>
+      <HandleCopyToClipboardContext.Provider value={handleCopyToClipboard}>
+        <App messages={messages} metrics={metrics} events={events} />
+      </HandleCopyToClipboardContext.Provider>
+    </>
+  )
 }
