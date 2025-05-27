@@ -1,3 +1,9 @@
+## [@ipshipyard/libp2p-inspector-v1.0.4](https://github.com/ipshipyard/js-libp2p-inspector/compare/@ipshipyard/libp2p-inspector-1.0.3...@ipshipyard/libp2p-inspector-1.0.4) (2025-05-27)
+
+### Bug Fixes
+
+* reduce redraws ([#3](https://github.com/ipshipyard/js-libp2p-inspector/issues/3)) ([d84a539](https://github.com/ipshipyard/js-libp2p-inspector/commit/d84a539857fff209f488030c325f63a1dbfd21c0))
+
 ## [@ipshipyard/libp2p-inspector-v1.0.3](https://github.com/ipshipyard/js-libp2p-inspector/compare/@ipshipyard/libp2p-inspector-1.0.2...@ipshipyard/libp2p-inspector-1.0.3) (2025-05-24)
 
 ### Documentation

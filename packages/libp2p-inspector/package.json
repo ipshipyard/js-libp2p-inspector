@@ -1,6 +1,6 @@
 {
   "name": "@ipshipyard/libp2p-inspector",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Inspect a running libp2p node",
   "author": "info@ipshipyard.com",
   "license": "Apache-2.0 OR MIT",
