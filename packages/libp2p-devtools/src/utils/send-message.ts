@@ -15,7 +15,7 @@ export interface DevToolEvents {
   'libp2p-rpc': CustomEvent<RPCMessage>
 }
 
-export const events: TypedEventTarget<DevToolEvents> = new TypedEventEmitter()
+export const devToolEvents: TypedEventTarget<DevToolEvents> = new TypedEventEmitter()
 
 export function sendMessage <Message extends Omit<DevToolsMessage, 'source' | 'tabId'>> (message: Omit<Message, 'source' | 'tabId'>): void {
   if (port == null) {
@@ -25,11 +25,11 @@ export function sendMessage <Message extends Omit<DevToolsMessage, 'source' | 't
 
     port.onMessage.addListener((message: RPCMessage | WorkerMessage) => {
       if (message.type === 'page-loaded') {
-        events.safeDispatchEvent('page-loaded', {})
+        devToolEvents.safeDispatchEvent('page-loaded')
       }
 
       if (message.type === 'libp2p-rpc') {
-        events.safeDispatchEvent<RPCMessage>('libp2p-rpc', {
+        devToolEvents.safeDispatchEvent<RPCMessage>('libp2p-rpc', {
           detail: message
         })
       }

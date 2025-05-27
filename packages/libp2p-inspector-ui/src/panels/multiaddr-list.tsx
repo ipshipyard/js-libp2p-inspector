@@ -1,7 +1,7 @@
 import './multiaddr-list.css'
-import 'react'
 import { multiaddr } from '@multiformats/multiaddr'
 import { WebRTC, WebSockets, WebSocketsSecure, WebTransport, Circuit, QUIC, QUICV1, TCP, WebRTCDirect } from '@multiformats/multiaddr-matcher'
+import { useContext } from 'react'
 import certifiedMultiaddr from '../../public/img/multiaddr-certified.svg'
 import uncertifiedMultiaddr from '../../public/img/multiaddr-uncertified.svg'
 import circuitRelayTransport from '../../public/img/transport-circuit-relay.svg'
@@ -11,6 +11,7 @@ import unknownTransport from '../../public/img/transport-unknown.svg'
 import webrtcTransport from '../../public/img/transport-webrtc.svg'
 import websocketTransport from '../../public/img/transport-websocket.svg'
 import webtransportTransport from '../../public/img/transport-webtransport.svg'
+import { HandleCopyToClipboardContext } from '../context/handle-copy-to-clipboard.ts'
 import { CopyIcon } from './icons/icon-copy.js'
 import type { Multiaddr } from '@multiformats/multiaddr'
 import type { ReactElement } from 'react'
@@ -57,19 +58,19 @@ function CertifiedIcon ({ isCertified }: CertifiedIconProps): ReactElement {
 
 interface MultiaddrProps {
   multiaddr: Multiaddr
-  copyToClipboard(value: string): void
   isCertified?: boolean
   key?: string
   includeCertification?: boolean
 }
 
-function MultiaddrPanel ({ multiaddr: m, isCertified, includeCertification, copyToClipboard }: MultiaddrProps): ReactElement {
+function MultiaddrPanel ({ multiaddr: m, isCertified, includeCertification }: MultiaddrProps): ReactElement {
+  const onCopyToClipboard = useContext(HandleCopyToClipboardContext)
   const ma = multiaddr(m)
 
   function onCopy (evt: any): void {
     evt.preventDefault()
 
-    copyToClipboard(ma.toString())
+    onCopyToClipboard(ma.toString())
   }
 
   return (
@@ -86,11 +87,10 @@ function MultiaddrPanel ({ multiaddr: m, isCertified, includeCertification, copy
 
 export interface MulitaddrListProps {
   addresses: Array<{ multiaddr: Multiaddr, isCertified?: boolean }>
-  copyToClipboard(value: string): void
   includeCertification?: boolean
 }
 
-export function MultiaddrList ({ addresses, includeCertification, copyToClipboard }: MulitaddrListProps): ReactElement {
+export function MultiaddrList ({ addresses, includeCertification }: MulitaddrListProps): ReactElement {
   if (addresses.length === 0) {
     return (
       <>
@@ -103,7 +103,7 @@ export function MultiaddrList ({ addresses, includeCertification, copyToClipboar
     <>
       <div className='MultiaddrList'>
         <ul>
-          {addresses.map(({ multiaddr: m, isCertified }, index) => <MultiaddrPanel key={`ma-${index}`} multiaddr={m} includeCertification={includeCertification} isCertified={isCertified} copyToClipboard={copyToClipboard} />)}
+          {addresses.map(({ multiaddr: m, isCertified }, index) => <MultiaddrPanel key={`ma-${index}`} multiaddr={m} includeCertification={includeCertification} isCertified={isCertified} />)}
         </ul>
       </div>
     </>

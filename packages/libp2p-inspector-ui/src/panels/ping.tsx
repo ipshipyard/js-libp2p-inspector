@@ -17,7 +17,7 @@ export function Ping ({ component, metrics }: PingPanelProps): JSX.Element {
   const [peerIdOrMultiaddr, setPeerIdOrMultiaddr] = useState('')
   const [result, setResult] = useState<JSX.Element | string>('')
 
-  function ping (evt: { preventDefault(): void }, topic: string): void {
+  function handlePing (evt: { preventDefault(): void }): void {
     evt.preventDefault()
 
     let remote = peerIdOrMultiaddr
@@ -71,9 +71,9 @@ export function Ping ({ component, metrics }: PingPanelProps): JSX.Element {
   return (
     <Panel>
       <p>Ping a peer</p>
-      <form onSubmit={(evt) => ping(evt, peerIdOrMultiaddr)}>
+      <form onSubmit={handlePing}>
         <TextInput type='text' value={peerIdOrMultiaddr} placeholder='Peer ID or Multiaddr' onChange={(e) => { setPeerIdOrMultiaddr(e.target.value) }} />
-        <Button onClick={(evt) => ping(evt, peerIdOrMultiaddr)} primary>Ping</Button>
+        <Button onClick={handlePing} primary>Ping</Button>
       </form>
       {result}
     </Panel>

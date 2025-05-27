@@ -13,10 +13,9 @@ import type { ReactElement } from 'react'
 export interface PeersProps {
   peers: PeerType[]
   metrics: MetricsRPC
-  copyToClipboard(value: string): void
 }
 
-export function PeerList ({ peers, metrics, copyToClipboard }: PeersProps): ReactElement {
+export function PeerList ({ peers, metrics }: PeersProps): ReactElement {
   if (peers.length === 0) {
     return (
       <Panel>
@@ -28,7 +27,7 @@ export function PeerList ({ peers, metrics, copyToClipboard }: PeersProps): Reac
   return (
     <>
       {
-        peers.map(peer => <Peer key={peer.id.toString()} peer={peer} metrics={metrics} copyToClipboard={copyToClipboard} />)
+        peers.map(peer => <Peer key={peer.id.toString()} peer={peer} metrics={metrics} />)
       }
     </>
   )
@@ -36,12 +35,11 @@ export function PeerList ({ peers, metrics, copyToClipboard }: PeersProps): Reac
 
 interface PeerProps {
   peer: PeerType
-  copyToClipboard(value: string): void
   metrics: MetricsRPC
   key?: string
 }
 
-function Peer ({ peer, copyToClipboard, metrics }: PeerProps): ReactElement {
+function Peer ({ peer, metrics }: PeerProps): ReactElement {
   const [expanded, setExpanded] = useState(false)
   const [disconnecting, setDisconnecting] = useState(false)
 
@@ -73,7 +71,7 @@ function Peer ({ peer, copyToClipboard, metrics }: PeerProps): ReactElement {
           <PeerTags peer={peer} />
         </p>
         <h3>Multiaddrs</h3>
-        <MultiaddrList addresses={peer.addresses} includeCertification copyToClipboard={copyToClipboard} />
+        <MultiaddrList addresses={peer.addresses} includeCertification />
         <PeerProtocols peer={peer} />
       </Panel>
     )

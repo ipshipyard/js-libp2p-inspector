@@ -11,10 +11,9 @@ import type { ReactElement } from 'react'
 export interface PubSubProps {
   component: string
   metrics: MetricsRPC
-  pubsub: Record<string, Message[]>
 }
 
-export function PubSub ({ component, metrics, pubsub }: PubSubProps): ReactElement {
+export function PubSub ({ component, metrics }: PubSubProps): ReactElement {
   const [topics, setTopics] = useState<string[]>([])
   const [topic, setTopic] = useState('')
 
@@ -35,7 +34,8 @@ export function PubSub ({ component, metrics, pubsub }: PubSubProps): ReactEleme
     <>
       <SubscribePanel component={component} metrics={metrics} subscribed={loadTopics} />
       <TopicList topics={topics} setTopic={setTopic} />
-      <TopicDisplay topic={topic} component={component} metrics={metrics} messages={pubsub[topic] ?? []} />
+      {/* TODO: fix message display */}
+      <TopicDisplay topic={topic} component={component} metrics={metrics} messages={[]} />
     </>
   )
 }

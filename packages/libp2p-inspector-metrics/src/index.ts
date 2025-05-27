@@ -16,7 +16,7 @@
  * for Chrome or Firefox to inspect the state of your running node.
  */
 
-import { isPubSub, serviceCapabilities, start, stop } from '@libp2p/interface'
+import { serviceCapabilities, start, stop } from '@libp2p/interface'
 import { simpleMetrics } from '@libp2p/simple-metrics'
 import { pipe } from 'it-pipe'
 import { pushable } from 'it-pushable'
@@ -27,12 +27,11 @@ import { messages } from './messages/index.js'
 import { valueCodecs } from './rpc/index.js'
 import { metricsRpc } from './rpc/rpc.js'
 import { debounce } from './utils/debounce.js'
-import { findCapability } from './utils/find-capability.js'
 import { getPeers } from './utils/get-peers.js'
 import { getSelf } from './utils/get-self.js'
 import type { Messages } from './messages/index.js'
 import type { InspectorRPC } from './rpc/index.js'
-import type { ComponentLogger, Connection, Libp2pEvents, Logger, Metrics, MultiaddrConnection, PeerId, PeerStore, Stream, ContentRouting, PeerRouting, TypedEventTarget, Startable, Message, SubscriptionChangeData, NodeInfo } from '@libp2p/interface'
+import type { ComponentLogger, Connection, Libp2pEvents, Logger, Metrics, MultiaddrConnection, PeerId, PeerStore, Stream, ContentRouting, PeerRouting, TypedEventTarget, Startable, NodeInfo } from '@libp2p/interface'
 import type { TransportManager, Registrar, ConnectionManager, AddressManager } from '@libp2p/interface-internal'
 import type { Pushable } from 'it-pushable'
 import type { RPC } from 'it-rpc'
@@ -191,10 +190,6 @@ class InspectorMetrics implements Metrics, Startable {
     this.onSelfUpdate = debounce(this.onSelfUpdate.bind(this), 1000)
     this.onIncomingMessage = this.onIncomingMessage.bind(this)
 
-    // relay pubsub messages to dev tools panel
-    this.onPubSubMessage = this.onPubSubMessage.bind(this)
-    this.onPubSubSubscriptionChange = this.onPubSubSubscriptionChange.bind(this)
-
     // collect metrics
     this.simpleMetrics = simpleMetrics({
       intervalMs: this.intervalMs,
@@ -301,13 +296,6 @@ class InspectorMetrics implements Metrics, Startable {
       .catch(err => {
         this.log.error('error while reading RPC messages', err)
       })
-
-    const pubsub = findCapability('@libp2p/pubsub', this.components)
-
-    if (isPubSub(pubsub)) {
-      pubsub.addEventListener('message', this.onPubSubMessage)
-      pubsub.addEventListener('subscription-change', this.onPubSubSubscriptionChange)
-    }
   }
 
   async stop (): Promise<void> {
@@ -354,24 +342,6 @@ class InspectorMetrics implements Metrics, Startable {
     if (message.type === 'libp2p-rpc') {
       this.rpcQueue.push(base64.decode(message.message))
     }
-  }
-
-  private onPubSubMessage (event: CustomEvent<Message>): void {
-    this.inspector.safeDispatchEvent('pubsub:message', {
-      detail: event.detail
-    })
-      .catch(err => {
-        this.log.error('error relaying pubsub message', err)
-      })
-  }
-
-  private onPubSubSubscriptionChange (event: CustomEvent<SubscriptionChangeData>): void {
-    this.inspector.safeDispatchEvent('pubsub:subscription-change', {
-      detail: event.detail
-    })
-      .catch(err => {
-        this.log.error('error relaying pubsub subscription change', err)
-      })
   }
 
   private onSelfUpdate (): void {
