@@ -200,7 +200,7 @@ class InspectorMetrics implements Metrics, Startable {
           this.log.error('error sending metrics', err)
         })
       }
-    })({})
+    })({ logger: components.logger })
   }
 
   readonly [Symbol.toStringTag] = '@ipshipyard/libp2p-inspector-metrics'
