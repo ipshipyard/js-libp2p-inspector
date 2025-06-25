@@ -1,3 +1,9 @@
+## [@ipshipyard/libp2p-inspector-metrics-v1.0.3](https://github.com/ipshipyard/js-libp2p-inspector/compare/@ipshipyard/libp2p-inspector-metrics-1.0.2...@ipshipyard/libp2p-inspector-metrics-1.0.3) (2025-06-25)
+
+### Bug Fixes
+
+* pass component logger to simple metrics ([#6](https://github.com/ipshipyard/js-libp2p-inspector/issues/6)) ([c8f9544](https://github.com/ipshipyard/js-libp2p-inspector/commit/c8f9544825e76ded96f1201ca18cd312bf31e962))
+
 ## [@ipshipyard/libp2p-inspector-metrics-v1.0.2](https://github.com/ipshipyard/js-libp2p-inspector/compare/@ipshipyard/libp2p-inspector-metrics-1.0.1...@ipshipyard/libp2p-inspector-metrics-1.0.2) (2025-05-27)
 
 ### Bug Fixes
