@@ -146,7 +146,7 @@
     "@libp2p/utils": "^6.6.5",
     "@multiformats/multiaddr": "^12.4.0",
     "@types/multicast-dns": "^7.2.4",
-    "electron": "^36.3.1",
+    "electron": "^37.2.3",
     "it-length-prefixed": "^10.0.1",
     "it-pipe": "^3.0.1",
     "it-pushable": "^3.2.3",
