@@ -130,7 +130,7 @@
   "scripts": {
     "clean": "aegir clean",
     "lint": "aegir lint",
-    "build": "tsc && node esbuild.js",
+    "build": "tsc -b . && node esbuild.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dep-check": "aegir dep-check",
     "start:firefox": "web-ext run --source-dir . --verbose --devtools",
