@@ -152,6 +152,7 @@
   },
   "devDependencies": {
     "@types/chrome": "^0.0.323",
+    "@types/lodash": "^4.17.20",
     "@types/react": "^19.1.5",
     "@types/react-dom": "^19.1.5",
     "@types/react-syntax-highlighter": "^15.5.13",
