@@ -10,11 +10,13 @@ standalone [Electron app](https://github.com/ipshipyard/js-libp2p-inspector/tree
 
 ![libp2p-inspector running in Electron](https://github.com/ipshipyard/js-libp2p-inspector/blob/main/assets/electron.png?raw=true)
 
+More in the [blog post](https://ipshipyard.com/blog/2025-js-libp2p-devtools/).
+
 # Packages
 
 - [`packages/libp2p-devtools`](https://github.com/ipshipyard/js-libp2p-inspector/tree/main/packages/libp2p-devtools) Browser DevTools plugin to inspect a libp2p node running on the current page
-- [`packages/libp2p-inspector`](https://github.com/ipshipyard/js-libp2p-inspector/tree/main/packages/libp2p-inspector) Inspect a running libp2p node
-- [`packages/libp2p-inspector-metrics`](https://github.com/ipshipyard/js-libp2p-inspector/tree/main/packages/libp2p-inspector-metrics) Collect libp2p metrics and send them to browser DevTools
+- [`packages/libp2p-inspector`](https://github.com/ipshipyard/js-libp2p-inspector/tree/main/packages/libp2p-inspector) Electron app to inspect a running libp2p node in node.js
+- [`packages/libp2p-inspector-metrics`](https://github.com/ipshipyard/js-libp2p-inspector/tree/main/packages/libp2p-inspector-metrics) Collect libp2p metrics and send them to inspector (DevTools or Inspector)
 - [`packages/libp2p-inspector-ui`](https://github.com/ipshipyard/js-libp2p-inspector/tree/main/packages/libp2p-inspector-ui) The user interface for inspecting a libp2p node
 
 # API Docs
