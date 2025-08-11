@@ -39,12 +39,12 @@ browser.runtime.onConnect.addListener(port => {
       tabId = message.tabId
     }
 
-    if (toDevTools[tabId] !== port) {
+    if (tabId != null && toDevTools[tabId] !== port) {
       toDevTools[tabId]?.onMessage.removeListener(onDevToolsPanelMessage)
       toDevTools[tabId] = port
     }
 
-    if (toContentScript[tabId] == null) {
+    if (tabId != null && toContentScript[tabId] == null) {
       toContentScript[tabId] = browser.tabs.connect(message.tabId, {
         name: SOURCE_SERVICE_WORKER
       })
@@ -59,12 +59,15 @@ browser.runtime.onConnect.addListener(port => {
     }
 
     // intercept copy-to-clipboard message
-    if (message.type === 'copy-to-clipboard') {
-      copyToClipboard(tabId, message.value); return
+    if (message.type === 'copy-to-clipboard' && tabId != null) {
+      copyToClipboard(tabId, message.value)
+      return
     }
 
     // forward message to content script
-    toContentScript[tabId].postMessage(message)
+    if (tabId != null) {
+      toContentScript[tabId].postMessage(message)
+    }
   }
 
   // Listen to messages sent from the DevTools page
@@ -106,8 +109,8 @@ browser.tabs?.onUpdated.addListener((tabId, changeInfo): void => {
   }
 })
 
-function copyToClipboard (tabId: number, text: string): void {
-  function contentCopy (text: string): void {
+function copyToClipboard(tabId: number, text: string): void {
+  function contentCopy(text: string): void {
     const input = document.createElement('textarea')
 
     // position absolutely to stop the page from jumping when we call .focus()

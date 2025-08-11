@@ -130,7 +130,7 @@
   "scripts": {
     "clean": "aegir clean",
     "lint": "aegir lint",
-    "build": "tsc && node esbuild.js",
+    "build": "tsc -b . && node esbuild.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dep-check": "aegir dep-check",
     "start:firefox": "web-ext run --source-dir . --verbose --devtools",
@@ -152,6 +152,8 @@
   },
   "devDependencies": {
     "@types/chrome": "^0.0.323",
+    "@types/lodash": "^4.17.20",
+    "@types/multicast-dns": "^7.2.4",
     "@types/react": "^19.1.5",
     "@types/react-dom": "^19.1.5",
     "@types/react-syntax-highlighter": "^15.5.13",
