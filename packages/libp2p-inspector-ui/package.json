@@ -157,7 +157,7 @@
     "@libp2p/interface": "^2.10.2",
     "@libp2p/peer-id": "^5.1.5",
     "@multiformats/multiaddr": "^12.4.0",
-    "@multiformats/multiaddr-matcher": "^1.7.2",
+    "@multiformats/multiaddr-matcher": "^2.0.2",
     "multiformats": "^13.3.6",
     "react-icons": "^5.5.0",
     "uint8arrays": "^5.1.0"
