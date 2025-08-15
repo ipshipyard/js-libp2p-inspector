@@ -15,15 +15,15 @@
     "scripting"
   ],
   "devtools_page": "devtools.html",
-  // https://stackoverflow.com/questions/75043889/manifest-v3-background-scripts-service-worker-on-firefox
   "background": {
-    // for chrome
-    "service_worker": "/dist/service-worker.js",
-    // for firefox
-    "scripts": ["/dist/service-worker.js"]
+    "service_worker": "service-worker.js",
+    "scripts": ["service-worker.js"]
   },
   "content_scripts": [{
-    "matches": ["<all_urls>"],
-    "js": ["/dist/content-script.js"]
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+    "js": ["content-script.js"]
   }]
 }
