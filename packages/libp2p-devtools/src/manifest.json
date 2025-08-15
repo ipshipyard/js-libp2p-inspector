@@ -16,14 +16,14 @@
   ],
   "devtools_page": "devtools.html",
   "background": {
-    "service_worker": "/dist/service-worker.js",
-    "scripts": ["/dist/service-worker.js"]
+    "service_worker": "service-worker.js",
+    "scripts": ["service-worker.js"]
   },
   "content_scripts": [{
       "matches": [
         "http://*/*",
         "https://*/*"
       ],
-    "js": ["/dist/content-script.js"]
+    "js": ["content-script.js"]
   }]
 }
