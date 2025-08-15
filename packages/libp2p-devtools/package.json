@@ -131,6 +131,7 @@
     "clean": "aegir clean",
     "lint": "aegir lint",
     "build": "tsc && node esbuild.js",
+    "package": "web-ext build --source-dir=. --artifacts-dir=. --filename=libp2p-devtools.zip --overwrite-dest",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dep-check": "aegir dep-check",
     "start:firefox": "web-ext run --source-dir . --verbose --devtools",
@@ -156,6 +157,6 @@
     "@types/react-dom": "^19.1.5",
     "@types/react-syntax-highlighter": "^15.5.13",
     "aegir": "^47.0.13",
-    "web-ext": "^8.7.0"
+    "web-ext": "^8.9.0"
   }
 }
