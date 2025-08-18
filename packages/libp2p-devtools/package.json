@@ -133,7 +133,7 @@
     "build": "tsc && node esbuild.js && npm run copy-assets",
     "copy-assets": "cp -r public dist/ && cp src/devtools.js dist/ && cp src/devtools.html dist/ && cp src/manifest.json dist/",
     "package": "web-ext build --source-dir=dist --artifacts-dir=dist --filename=libp2p-devtools.zip --overwrite-dest",
-    "publish:chrome-store": "npx cws-publish \"$CHROME_CLIENT_ID\" \"$CHROME_CLIENT_SECRET\" \"$CHROME_REFRESH_TOKEN\" ipfs-quicklaunch.zip \"$CHROME_EXTENSION_ID\"",
+    "publish:chrome-store": "npx cws-publish \"$CHROME_CLIENT_ID\" \"$CHROME_CLIENT_SECRET\" \"$CHROME_REFRESH_TOKEN\" libp2p-devtools.zip \"$CHROME_EXTENSION_ID\"",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dep-check": "aegir dep-check",
     "start:firefox": "web-ext run --source-dir src --verbose --devtools",
