@@ -141,10 +141,10 @@
   "dependencies": {
     "@ipshipyard/libp2p-inspector-metrics": "^1.0.1",
     "@ipshipyard/libp2p-inspector-ui": "^1.0.1",
-    "@libp2p/interface": "^2.10.2",
-    "@libp2p/peer-id": "^5.1.5",
-    "@libp2p/utils": "^6.6.5",
-    "@multiformats/multiaddr": "^12.4.0",
+    "@libp2p/interface": "^3.0.0",
+    "@libp2p/peer-id": "^6.0.0",
+    "@libp2p/utils": "^7.0.0",
+    "@multiformats/multiaddr": "^13.0.1",
     "@types/multicast-dns": "^7.2.4",
     "electron": "^36.3.1",
     "it-length-prefixed": "^10.0.1",
@@ -161,13 +161,13 @@
     "uint8arrays": "^5.1.0"
   },
   "devDependencies": {
-    "@libp2p/webrtc": "^5.2.15",
+    "@libp2p/webrtc": "^6.0.0",
     "@playwright/test": "^1.52.0",
     "@types/react": "^19.1.5",
     "@types/react-dom": "^19.1.5",
     "aegir": "^47.0.13",
     "fast-glob": "^3.3.3",
-    "libp2p": "^2.8.8",
+    "libp2p": "^3.0.0",
     "playwright-core": "^1.52.0"
   }
 }

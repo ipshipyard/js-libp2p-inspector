@@ -154,10 +154,10 @@
   },
   "dependencies": {
     "@ipshipyard/libp2p-inspector-metrics": "^1.0.1",
-    "@libp2p/interface": "^2.10.2",
-    "@libp2p/peer-id": "^5.1.5",
-    "@multiformats/multiaddr": "^12.4.0",
-    "@multiformats/multiaddr-matcher": "^1.7.2",
+    "@libp2p/interface": "^3.0.0",
+    "@libp2p/peer-id": "^6.0.0",
+    "@multiformats/multiaddr": "^13.0.1",
+    "@multiformats/multiaddr-matcher": "^3.0.1",
     "multiformats": "^13.3.6",
     "react-icons": "^5.5.0",
     "uint8arrays": "^5.1.0"

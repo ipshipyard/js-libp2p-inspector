@@ -141,7 +141,7 @@
   "dependencies": {
     "@ipshipyard/libp2p-inspector-metrics": "^1.0.1",
     "@ipshipyard/libp2p-inspector-ui": "^1.0.1",
-    "@libp2p/interface": "^2.10.2",
+    "@libp2p/interface": "^3.0.0",
     "it-pipe": "^3.0.1",
     "it-pushable": "^3.2.3",
     "it-rpc": "^1.1.0",
