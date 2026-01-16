@@ -1,3 +1,13 @@
+## [@ipshipyard/libp2p-inspector-v2.0.0](https://github.com/ipshipyard/js-libp2p-inspector/compare/@ipshipyard/libp2p-inspector-1.0.4...@ipshipyard/libp2p-inspector-2.0.0) (2026-01-16)
+
+### ⚠ BREAKING CHANGES
+
+* use with libp2p@v3 only
+
+### Features
+
+* update to libp2p-v3 ([#84](https://github.com/ipshipyard/js-libp2p-inspector/issues/84)) ([a92ce3e](https://github.com/ipshipyard/js-libp2p-inspector/commit/a92ce3e1b51555657d3465205c9c6b3216bc6ae3))
+
 ## [@ipshipyard/libp2p-inspector-v1.0.4](https://github.com/ipshipyard/js-libp2p-inspector/compare/@ipshipyard/libp2p-inspector-1.0.3...@ipshipyard/libp2p-inspector-1.0.4) (2025-05-27)
 
 ### Bug Fixes
