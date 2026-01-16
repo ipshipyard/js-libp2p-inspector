@@ -57,7 +57,6 @@ export function metricsRpc (components: InspectorMetricsComponents): MetricsRPC 
         id: conn.id,
         remoteAddr: conn.remoteAddr,
         remotePeer: conn.remotePeer,
-        tags: conn.tags,
         direction: conn.direction,
         timeline: conn.timeline,
         multiplexer: conn.multiplexer,

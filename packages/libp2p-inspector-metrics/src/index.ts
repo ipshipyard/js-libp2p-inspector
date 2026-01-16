@@ -31,7 +31,7 @@ import { getPeers } from './utils/get-peers.js'
 import { getSelf } from './utils/get-self.js'
 import type { Messages } from './messages/index.js'
 import type { InspectorRPC } from './rpc/index.js'
-import type { ComponentLogger, Connection, Libp2pEvents, Logger, Metrics, MultiaddrConnection, PeerId, PeerStore, Stream, ContentRouting, PeerRouting, TypedEventTarget, Startable, NodeInfo } from '@libp2p/interface'
+import type { ComponentLogger, Libp2pEvents, Logger, Metrics, MultiaddrConnection, PeerId, PeerStore, Stream, ContentRouting, PeerRouting, TypedEventTarget, Startable, NodeInfo } from '@libp2p/interface'
 import type { TransportManager, Registrar, ConnectionManager, AddressManager } from '@libp2p/interface-internal'
 import type { Pushable } from 'it-pushable'
 import type { RPC } from 'it-rpc'
@@ -213,8 +213,8 @@ class InspectorMetrics implements Metrics, Startable {
     this.simpleMetrics.trackMultiaddrConnection(maConn)
   }
 
-  trackProtocolStream (stream: Stream, connection: Connection): void {
-    this.simpleMetrics.trackProtocolStream(stream, connection)
+  trackProtocolStream (stream: Stream): void {
+    this.simpleMetrics.trackProtocolStream(stream)
   }
 
   registerMetric (name: any, options: any): any {

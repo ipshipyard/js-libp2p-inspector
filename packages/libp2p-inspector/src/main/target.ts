@@ -1,6 +1,7 @@
 import { createConnection } from 'node:net'
 import { SOURCE_CLIENT } from '@ipshipyard/libp2p-inspector-metrics'
-import { Queue } from '@libp2p/utils/queue'
+import { InvalidParametersError } from '@libp2p/interface'
+import { getNetConfig, Queue } from '@libp2p/utils'
 import { encode, decode } from 'it-length-prefixed'
 import { pushable } from 'it-pushable'
 import { base64 } from 'multiformats/bases/base64'
@@ -105,8 +106,16 @@ export class Target {
 
   private async _openConnection (ma: Multiaddr, options?: AbortOptions): Promise<void> {
     const result = Promise.withResolvers<void>()
+    const config = getNetConfig(ma)
 
-    const socket = createConnection(ma.toOptions(), () => {
+    if (config.port == null) {
+      throw new InvalidParametersError('Port was missing from multiaddr')
+    }
+
+    const socket = createConnection({
+      host: config.host,
+      port: config.port
+    }, () => {
       this.source = pushable()
 
       const duplexSocket = duplex(socket)

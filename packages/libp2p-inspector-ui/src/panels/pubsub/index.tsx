@@ -5,7 +5,7 @@ import { Panel } from '../panel.js'
 import { SmallError, SmallSuccess } from '../status.js'
 import { TextInput } from '../text-input.js'
 import type { MetricsRPC } from '@ipshipyard/libp2p-inspector-metrics'
-import type { Message } from '@libp2p/interface'
+import type { Message } from '@libp2p/gossipsub'
 import type { ReactElement } from 'react'
 
 export interface PubSubProps {

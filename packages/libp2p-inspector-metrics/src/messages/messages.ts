@@ -1,7 +1,6 @@
 import { createServer } from 'node:net'
 import { start, stop, TypedEventEmitter } from '@libp2p/interface'
-import { getThinWaistAddresses } from '@libp2p/utils/get-thin-waist-addresses'
-import { isPrivate } from '@libp2p/utils/multiaddr/is-private'
+import { getThinWaistAddresses, isPrivate } from '@libp2p/utils'
 import { multiaddr } from '@multiformats/multiaddr'
 import { encode, decode } from 'it-length-prefixed'
 import { pushable } from 'it-pushable'
@@ -99,8 +98,7 @@ class MDNSPortAdvertisement {
 
 function toMultiaddrs (addr: string | AddressInfo): Multiaddr[] {
   if (typeof addr === 'string') {
-    // TODO: wrap with encodeURIComponent https://github.com/multiformats/multiaddr/pull/174
-    return [multiaddr(`/unix/${addr}`)]
+    return [multiaddr(`/unix/${encodeURIComponent(addr)}`)]
   }
 
   const { family, address, port } = addr

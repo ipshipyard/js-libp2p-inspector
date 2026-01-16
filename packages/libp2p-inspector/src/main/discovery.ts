@@ -1,5 +1,5 @@
 import { peerIdFromString } from '@libp2p/peer-id'
-import { repeatingTask } from '@libp2p/utils/repeating-task'
+import { repeatingTask } from '@libp2p/utils'
 import { multiaddr } from '@multiformats/multiaddr'
 import multicastDNS from 'multicast-dns'
 import { Target } from './target.js'

@@ -2,7 +2,7 @@ import { cidCodec } from './codecs/cid.js'
 import { customProgressEventCodec } from './codecs/custom-progress-event.js'
 import { multiaddrCodec } from './codecs/multiaddr.js'
 import { peerIdCodec } from './codecs/peer-id.js'
-import type { ContentRouting, PeerId, PeerRouting, AbortOptions, IdentifyResult, Direction, ConnectionTimeline, ConnectionStatus, ConnectionLimits } from '@libp2p/interface'
+import type { ContentRouting, PeerId, PeerRouting, AbortOptions, IdentifyResult, ConnectionStatus, ConnectionLimits, MultiaddrConnectionTimeline, MessageStreamDirection } from '@libp2p/interface'
 import type { OpenConnectionOptions } from '@libp2p/interface-internal'
 import type { Multiaddr } from '@multiformats/multiaddr'
 import type { ValueCodec } from 'it-rpc'
@@ -51,9 +51,8 @@ export interface Connection {
   id: string
   remoteAddr: Multiaddr
   remotePeer: PeerId
-  tags: string[]
-  direction: Direction
-  timeline: ConnectionTimeline
+  direction: MessageStreamDirection
+  timeline: MultiaddrConnectionTimeline
   multiplexer?: string
   encryption?: string
   status: ConnectionStatus

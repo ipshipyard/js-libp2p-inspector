@@ -141,7 +141,7 @@
   "dependencies": {
     "@ipshipyard/libp2p-inspector-metrics": "^1.0.1",
     "@ipshipyard/libp2p-inspector-ui": "^1.0.1",
-    "@libp2p/interface": "^2.10.2",
+    "@libp2p/interface": "^3.1.0",
     "it-pipe": "^3.0.1",
     "it-pushable": "^3.2.3",
     "it-rpc": "^1.1.0",
@@ -149,15 +149,15 @@
     "multiformats": "^13.3.6",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "react-syntax-highlighter": "^15.6.1",
+    "react-syntax-highlighter": "^16.1.0",
     "uint8arrays": "^5.1.0"
   },
   "devDependencies": {
-    "@types/chrome": "^0.0.323",
+    "@types/chrome": "^0.1.33",
     "@types/react": "^19.1.5",
     "@types/react-dom": "^19.1.5",
     "@types/react-syntax-highlighter": "^15.5.13",
     "aegir": "^47.0.13",
-    "web-ext": "^8.9.0"
+    "web-ext": "^9.2.0"
   }
 }
