@@ -139,8 +139,8 @@
     "release": "aegir release"
   },
   "dependencies": {
-    "@ipshipyard/libp2p-inspector-metrics": "^1.0.1",
-    "@ipshipyard/libp2p-inspector-ui": "^1.0.1",
+    "@ipshipyard/libp2p-inspector-metrics": "^1.0.0",
+    "@ipshipyard/libp2p-inspector-ui": "^1.0.0",
     "@libp2p/interface": "^3.1.0",
     "@libp2p/peer-id": "^6.0.4",
     "@libp2p/utils": "^7.0.9",
@@ -150,24 +150,24 @@
     "it-length-prefixed": "^10.0.1",
     "it-pipe": "^3.0.1",
     "it-pushable": "^3.2.3",
-    "it-rpc": "^1.1.0",
+    "it-rpc": "^1.2.1",
     "multicast-dns": "^7.2.5",
-    "multiformats": "^13.3.6",
+    "multiformats": "^13.4.2",
     "race-signal": "^2.0.0",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
     "react-icons": "^5.5.0",
     "stream-to-it": "^1.0.1",
     "uint8arrays": "^5.1.0"
   },
   "devDependencies": {
     "@libp2p/webrtc": "^6.0.10",
-    "@playwright/test": "^1.52.0",
-    "@types/react": "^19.1.5",
-    "@types/react-dom": "^19.1.5",
-    "aegir": "^47.0.13",
+    "@playwright/test": "^1.57.0",
+    "@types/react": "^19.2.8",
+    "@types/react-dom": "^19.2.3",
+    "aegir": "^47.0.25",
     "fast-glob": "^3.3.3",
     "libp2p": "^3.1.2",
-    "playwright-core": "^1.52.0"
+    "playwright-core": "^1.57.0"
   }
 }

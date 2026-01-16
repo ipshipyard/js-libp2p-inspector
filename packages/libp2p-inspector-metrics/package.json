@@ -145,21 +145,21 @@
     "@libp2p/simple-metrics": "^2.0.9",
     "@libp2p/utils": "^7.0.9",
     "@multiformats/multiaddr": "^13.0.1",
-    "cborg": "^4.2.11",
+    "cborg": "^4.3.2",
     "dns-packet": "^5.6.1",
     "it-length-prefixed": "^10.0.1",
     "it-pipe": "^3.0.1",
     "it-pushable": "^3.2.3",
-    "it-rpc": "^1.1.0",
+    "it-rpc": "^1.2.1",
     "multicast-dns": "^7.2.5",
-    "multiformats": "^13.3.6",
+    "multiformats": "^13.4.2",
     "progress-events": "^1.0.1",
     "stream-to-it": "^1.0.1",
     "uint8arrays": "^5.1.0"
   },
   "devDependencies": {
-    "@libp2p/crypto": "^5.1.4",
-    "aegir": "^47.0.13",
+    "@libp2p/crypto": "^5.1.13",
+    "aegir": "^47.0.25",
     "sinon-ts": "^2.0.0"
   },
   "browser": {

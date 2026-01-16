@@ -139,25 +139,25 @@
     "release": "aegir release"
   },
   "dependencies": {
-    "@ipshipyard/libp2p-inspector-metrics": "^1.0.1",
-    "@ipshipyard/libp2p-inspector-ui": "^1.0.1",
+    "@ipshipyard/libp2p-inspector-metrics": "^1.0.0",
+    "@ipshipyard/libp2p-inspector-ui": "^1.0.0",
     "@libp2p/interface": "^3.1.0",
     "it-pipe": "^3.0.1",
     "it-pushable": "^3.2.3",
-    "it-rpc": "^1.1.0",
+    "it-rpc": "^1.2.1",
     "it-stream-types": "^2.0.2",
-    "multiformats": "^13.3.6",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
+    "multiformats": "^13.4.2",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
     "react-syntax-highlighter": "^16.1.0",
     "uint8arrays": "^5.1.0"
   },
   "devDependencies": {
     "@types/chrome": "^0.1.33",
-    "@types/react": "^19.1.5",
-    "@types/react-dom": "^19.1.5",
+    "@types/react": "^19.2.8",
+    "@types/react-dom": "^19.2.3",
     "@types/react-syntax-highlighter": "^15.5.13",
-    "aegir": "^47.0.13",
+    "aegir": "^47.0.25",
     "web-ext": "^9.2.0"
   }
 }
