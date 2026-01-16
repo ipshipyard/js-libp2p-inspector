@@ -1,6 +1,6 @@
 import './multiaddr-list.css'
 import { multiaddr } from '@multiformats/multiaddr'
-import { WebRTC, WebSockets, WebSocketsSecure, WebTransport, Circuit, QUIC, QUICV1, TCP, WebRTCDirect } from '@multiformats/multiaddr-matcher'
+import { WebRTC, WebSockets, WebSocketsSecure, WebTransport, Circuit, QUIC, QUIC_V1, TCP, WebRTCDirect } from '@multiformats/multiaddr-matcher'
 import { useContext } from 'react'
 import certifiedMultiaddr from '../../public/img/multiaddr-certified.svg'
 import uncertifiedMultiaddr from '../../public/img/multiaddr-uncertified.svg'
@@ -31,7 +31,7 @@ function TransportIcon ({ multiaddr }: TransportIconProps): ReactElement {
     src = websocketTransport
   } else if (WebTransport.matches(multiaddr)) {
     src = webtransportTransport
-  } else if (QUIC.matches(multiaddr) || QUICV1.matches(multiaddr)) {
+  } else if (QUIC.matches(multiaddr) || QUIC_V1.matches(multiaddr)) {
     src = quicTransport
   } else if (TCP.matches(multiaddr)) {
     src = tcpTransport

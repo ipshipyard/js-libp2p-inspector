@@ -43,7 +43,7 @@ export function Node ({ id, addresses, protocols, metadata }: NodeProps): ReactE
         addresses={addresses.map(address => {
           let multiaddr = address.multiaddr
 
-          if (multiaddr.getPeerId() == null) {
+          if (multiaddr.getComponents().some(c => c.name === 'p2p') === false) {
             multiaddr = multiaddr.encapsulate(`/p2p/${id}`)
           }
 

@@ -1,10 +1,21 @@
-import { InvalidParametersError, isPubSub } from '@libp2p/interface'
-import type { PubSub } from '@libp2p/interface'
+import { InvalidParametersError } from '@libp2p/interface'
+import type { GossipSub } from '@libp2p/gossipsub'
 
-export function getPubSub (component: string, components: any): PubSub {
+function isGossipSub (obj?: any): obj is GossipSub {
+  if (obj == null) {
+    return false
+  }
+
+  return typeof obj.publish === 'function' &&
+    typeof obj.getSubscribers === 'function' &&
+    typeof obj.unsubscribe === 'function' &&
+    typeof obj.subscribe === 'function'
+}
+
+export function getPubSub (component: string, components: any): GossipSub {
   const pubsub = components[component]
 
-  if (!isPubSub(pubsub)) {
+  if (!isGossipSub(pubsub)) {
     throw new InvalidParametersError(`Component ${component} did not implement the PubSub interface`)
   }
 
