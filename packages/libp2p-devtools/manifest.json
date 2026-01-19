@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "libp2p DevTools",
-  "version": "0.0.1",
+  "version": "2.0.2",
   "description": "Inspect a libp2p node running on the current page",
   "author": "IP Shipyard",
   "icons": {
