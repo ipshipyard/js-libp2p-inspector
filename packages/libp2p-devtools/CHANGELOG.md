@@ -1,3 +1,9 @@
+## [@ipshipyard/libp2p-devtools-v2.0.2](https://github.com/ipshipyard/js-libp2p-inspector/compare/@ipshipyard/libp2p-devtools-2.0.1...@ipshipyard/libp2p-devtools-2.0.2) (2026-01-19)
+
+### Bug Fixes
+
+* update manifest version ([41e463f](https://github.com/ipshipyard/js-libp2p-inspector/commit/41e463fae7d18b4d10025a3264211df7c7c2840a))
+
 ## [@ipshipyard/libp2p-devtools-v2.0.1](https://github.com/ipshipyard/js-libp2p-inspector/compare/@ipshipyard/libp2p-devtools-2.0.0...@ipshipyard/libp2p-devtools-2.0.1) (2026-01-16)
 
 ### Bug Fixes

@@ -1,6 +1,6 @@
 {
   "name": "@ipshipyard/libp2p-devtools",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Browser DevTools plugin to inspect a libp2p node running on the current page",
   "author": "info@ipshipyard.com",
   "license": "Apache-2.0 OR MIT",
