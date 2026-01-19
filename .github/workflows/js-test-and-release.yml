@@ -33,7 +33,7 @@ jobs:
     outputs:
       devtools-changed: ${{ steps.changes.outputs.devtools }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36 # v3.0.2
         id: changes
         with:
@@ -46,7 +46,7 @@ jobs:
     needs: [js-test-and-release, changes]
     if: needs.js-test-and-release.outputs.release == 'true' && needs.changes.outputs.devtools-changed == 'true'
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           persist-credentials: false
       - uses: actions/setup-node@v4
