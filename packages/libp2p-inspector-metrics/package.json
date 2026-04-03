@@ -145,7 +145,7 @@
     "@libp2p/simple-metrics": "^2.0.9",
     "@libp2p/utils": "^7.0.9",
     "@multiformats/multiaddr": "^13.0.1",
-    "cborg": "^4.3.2",
+    "cborg": "^5.0.1",
     "dns-packet": "^5.6.1",
     "it-length-prefixed": "^10.0.1",
     "it-pipe": "^3.0.1",
