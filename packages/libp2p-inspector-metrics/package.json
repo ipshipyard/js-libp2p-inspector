@@ -152,7 +152,7 @@
     "it-pushable": "^3.2.3",
     "it-rpc": "^1.2.1",
     "multicast-dns": "^7.2.5",
-    "multiformats": "^13.4.2",
+    "multiformats": "^14.0.0",
     "progress-events": "^1.0.1",
     "stream-to-it": "^1.0.1",
     "uint8arrays": "^5.1.0"
