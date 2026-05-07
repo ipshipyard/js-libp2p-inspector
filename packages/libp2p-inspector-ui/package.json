@@ -161,7 +161,7 @@
     "@multiformats/multiaddr-matcher": "^3.0.1",
     "multiformats": "^13.4.2",
     "react-icons": "^5.5.0",
-    "uint8arrays": "^5.1.0"
+    "uint8arrays": "^6.1.0"
   },
   "devDependencies": {
     "@types/react": "^19.2.8",
