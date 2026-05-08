@@ -147,7 +147,7 @@
     "@multiformats/multiaddr": "^13.0.1",
     "cborg": "^4.3.2",
     "dns-packet": "^5.6.1",
-    "it-length-prefixed": "^10.0.1",
+    "it-length-prefixed": "^11.0.1",
     "it-pipe": "^3.0.1",
     "it-pushable": "^3.2.3",
     "it-rpc": "^1.2.1",
