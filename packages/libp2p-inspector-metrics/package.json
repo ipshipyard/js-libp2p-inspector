@@ -155,7 +155,7 @@
     "multiformats": "^13.4.2",
     "progress-events": "^1.0.1",
     "stream-to-it": "^1.0.1",
-    "uint8arrays": "^5.1.0"
+    "uint8arrays": "^6.1.1"
   },
   "devDependencies": {
     "@libp2p/crypto": "^5.1.13",
